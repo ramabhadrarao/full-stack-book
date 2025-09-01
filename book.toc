@@ -1,4 +1,23 @@
-\contentsline {chapter}{List of Code Examples}{vi}{}%
-\contentsline {chapter}{\numberline {0}OVERVIEW}{1}{}%
-\contentsline {section}{What is JavaScript?}{1}{}%
-\contentsline {section}{HTML, CSS, and JavaScript Integration}{1}{}%
+\contentsline {chapter}{\numberline {1}BASIC JAVASCRIPT}{1}{}%
+\contentsline {section}{Introduction to JavaScript}{1}{}%
+\contentsline {section}{JavaScript Instructions and Statements}{1}{}%
+\contentsline {section}{Comments in JavaScript}{2}{}%
+\contentsline {section}{Variables in JavaScript}{3}{}%
+\contentsline {subsubsection}{Variable Declaration Keywords}{3}{}%
+\contentsline {subsubsection}{Variable Scope}{4}{}%
+\contentsline {subsubsection}{Hoisting}{5}{}%
+\contentsline {section}{Data Types in JavaScript}{5}{}%
+\contentsline {subsubsection}{Primitive Data Types}{6}{}%
+\contentsline {subsubsection}{Type Conversion and Coercion}{6}{}%
+\contentsline {section}{Arrays in JavaScript}{7}{}%
+\contentsline {subsubsection}{Array Creation and Methods}{7}{}%
+\contentsline {section}{Strings in JavaScript}{8}{}%
+\contentsline {section}{Functions in JavaScript}{9}{}%
+\contentsline {section}{Objects and Methods}{10}{}%
+\contentsline {section}{Decisions and Loops}{11}{}%
+\contentsline {subsubsection}{Conditional Statements}{11}{}%
+\contentsline {subsubsection}{Loops}{12}{}%
+\contentsline {chapter}{\numberline {2}DOM MANIPULATION}{14}{}%
+\contentsline {chapter}{\numberline {3}FORMS AND REACT INTRODUCTION}{15}{}%
+\contentsline {chapter}{\numberline {4}REACT STATE AND APIs}{16}{}%
+\contentsline {chapter}{\numberline {5}MONGODB AND WEBPACK}{17}{}%
