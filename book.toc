@@ -1,0 +1,4 @@
+\contentsline {chapter}{List of Code Examples}{vi}{}%
+\contentsline {chapter}{\numberline {0}OVERVIEW}{1}{}%
+\contentsline {section}{What is JavaScript?}{1}{}%
+\contentsline {section}{HTML, CSS, and JavaScript Integration}{1}{}%

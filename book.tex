@@ -1,0 +1,410 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[left=0.75in,right=0.75in,top=0.75in,bottom=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,shadows,patterns,positioning}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{helvet}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}  % Fix fancyhdr warning
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+% Font settings
+\renewcommand{\familydefault}{\sfdefault}
+\setstretch{1.15}
+
+% Define colors
+\definecolor{headerred}{RGB}{213,43,30}
+\definecolor{jsyellow}{RGB}{247,223,30}
+\definecolor{cssblue}{RGB}{38,77,228}
+\definecolor{htmlorange}{RGB}{228,77,38}
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{codecomment}{RGB}{0,128,0}
+\definecolor{codekeyword}{RGB}{0,0,255}
+\definecolor{codestring}{RGB}{163,21,21}
+
+% Listings settings for code
+\lstset{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    frameround=tttt,
+    framexleftmargin=5pt,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=5pt,
+    showstringspaces=false,
+    keywordstyle=\color{codekeyword}\bfseries,
+    commentstyle=\color{codecomment}\itshape,
+    stringstyle=\color{codestring},
+    tabsize=2,
+    autogobble=true
+}
+
+% JavaScript listing style
+\lstdefinestyle{javascript}{
+    language=Java,  % Use Java as base language
+    morekeywords={let, const, async, await, of, function, var, return, if, else, for, while, do, switch, case, break, continue, new, this, typeof, instanceof, true, false, null, undefined}
+}
+
+% HTML listing style  
+\lstdefinestyle{html}{
+    language=HTML,
+    morekeywords={DOCTYPE, html, head, body, title, meta, link, script, style, div, span, p, h1, h2, h3, h4, h5, h6, ul, ol, li, a, img, form, input, button, textarea, select, option}
+}
+
+% CSS listing style
+\lstdefinestyle{css}{
+    language=[LaTeX]TeX,  % Use TeX as base, then override
+    morekeywords={body, div, span, p, h1, h2, h3, h4, h5, h6, margin, padding, display, flex, grid, position, background, color, font-family, font-size, border, width, height, top, left, right, bottom, transition, transform, animation},
+    sensitive=false,
+}
+
+% Remove paragraph indentation
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+% Custom chapter command for red header
+\newcommand{\mychapter}[1]{%
+    \clearpage
+    \vspace*{-1in}
+    \begin{tcolorbox}[
+        colback=headerred,
+        coltext=white,
+        boxrule=0pt,
+        arc=0pt,
+        outer arc=0pt,
+        left=0pt,
+        right=0pt,
+        top=30pt,
+        bottom=30pt,
+        width=\textwidth,
+        enlarge left by=-0.75in,
+        enlarge right by=-0.75in,
+        width=\paperwidth
+    ]
+        \centering
+        \Huge\bfseries \thechapter.~#1
+    \end{tcolorbox}
+    \vspace{1em}
+    \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}
+}
+
+% Section formatting
+\newcommand{\mysection}[1]{%
+    \vspace{0.3em}
+    {\large\bfseries\underline{#1}}
+    \vspace{0.2em}
+    \addcontentsline{toc}{section}{#1}
+}
+
+% Page styles
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{Javascript Tutorial}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Special styles
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+}
+
+\fancypagestyle{empty}{
+    \fancyhf{}
+}
+
+% Custom itemize
+\setlist[itemize]{
+    topsep=0.2em,
+    itemsep=0.2em,
+    parsep=0pt,
+    partopsep=0pt,
+    leftmargin=2em,
+    label=\textbullet
+}
+
+\begin{document}
+\frontmatter
+
+% MODERN TITLE PAGE
+\thispagestyle{empty}
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        % Background gradient effect
+        \fill[headerred!10] (current page.north west) rectangle (current page.south east);
+        \draw[headerred!30, line width=1pt] 
+            ([xshift=1cm,yshift=-1cm]current page.north west) 
+            rectangle ([xshift=-1cm,yshift=1cm]current page.south east);
+    \end{tikzpicture}
+    
+    \vspace*{1cm}
+    
+    \begin{center}
+        % Modern geometric header
+        \begin{tikzpicture}
+            \node[draw=none, fill=headerred, minimum width=10cm, minimum height=1.5cm, 
+                  rounded corners=5pt, drop shadow] at (0,0) {
+                \color{white}\Huge\bfseries JAVASCRIPT
+            };
+            \node[draw=none, fill=jsyellow, 
+                  minimum width=8cm, minimum height=1cm, rounded corners=3pt] at (0,-2) {
+                \Large\bfseries TUTORIAL
+            };
+        \end{tikzpicture}
+        
+        \vspace{2cm}
+        
+        % Modern JS logo
+        \begin{tikzpicture}[scale=2]
+            \node[draw=none, fill=jsyellow, minimum width=3cm, minimum height=3cm, 
+                  rounded corners=5pt, drop shadow] at (0,0) {
+                \Huge\bfseries\color{black} JS
+            };
+            % Decorative elements
+            \foreach \angle in {0,45,90,135,180,225,270,315} {
+                \draw[headerred, line width=2pt] 
+                    (\angle:2) -- (\angle:2.3);
+            }
+        \end{tikzpicture}
+        
+        \vspace{2cm}
+        
+        % Subtitle
+        {\Large\color{headerred} Complete Programming Guide}\\[0.5cm]
+        {\large From Basics to Advanced Concepts}\\[1.5cm]
+        
+        % Feature badges
+        \begin{tikzpicture}
+            \node[draw=htmlorange, fill=htmlorange!20, rounded corners=3pt, 
+                  minimum width=2.5cm] at (-3,0) {HTML5};
+            \node[draw=cssblue, fill=cssblue!20, rounded corners=3pt, 
+                  minimum width=2.5cm] at (0,0) {CSS3};
+            \node[draw=jsyellow!80!black, fill=jsyellow!20, rounded corners=3pt, 
+                  minimum width=2.5cm] at (3,0) {ES6+};
+        \end{tikzpicture}
+        
+        \vfill
+        
+        % Publisher info
+        \begin{tcolorbox}[
+            colback=white,
+            coltext=black,
+            boxrule=2pt,
+            arc=5pt,
+            width=10cm,
+            center,
+            colframe=headerred
+        ]
+            \centering
+            \large\bfseries TutorialsPoint\\[0.2cm]
+            \normalsize Simply Easy Learning\\[0.3cm]
+            \small Version 2.0 | \today
+        \end{tcolorbox}
+    \end{center}
+\end{titlepage}
+
+% COPYRIGHT PAGE
+\clearpage
+\thispagestyle{empty}
+\vspace*{3cm}
+\begin{center}
+    \large\bfseries Copyright Notice
+\end{center}
+
+\vspace{1cm}
+
+© 2024 TutorialsPoint. All Rights Reserved.
+
+No part of this publication may be reproduced, stored in a retrieval system, or transmitted, in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, without the prior written permission of the publisher.
+
+\vspace{1cm}
+
+\textbf{ISBN:} 978-1-234567-89-0\\
+\textbf{First Edition:} January 2024\\
+\textbf{Publisher:} TutorialsPoint Pvt. Ltd.\\
+\textbf{Website:} www.tutorialspoint.com
+
+\vspace{1cm}
+
+\textbf{Disclaimer:}\\
+The information contained in this book is provided without any express, statutory, or implied warranties. Neither the authors, TutorialsPoint, nor its resellers or distributors will be held liable for any damages caused or alleged to be caused either directly or indirectly by this book.
+
+\vfill
+
+Printed in India
+
+% AUTHOR PAGE
+\clearpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{center}
+    \large\bfseries About the Author
+\end{center}
+
+\vspace{1cm}
+
+\textbf{John Developer} is a seasoned software engineer with over 15 years of experience in web development. He has worked extensively with JavaScript since its early days and has witnessed its evolution into one of the most powerful programming languages.
+
+John holds a Master's degree in Computer Science from Stanford University and has contributed to numerous open-source projects. He is passionate about teaching and has conducted workshops on JavaScript at various tech conferences worldwide.
+
+When not coding, John enjoys hiking and photography. He currently lives in San Francisco with his family.
+
+\vspace{2cm}
+
+\begin{center}
+    \large\bfseries Technical Reviewers
+\end{center}
+
+\vspace{1cm}
+
+\textbf{Sarah Chen} - Senior Frontend Developer at Tech Corp\\
+\textbf{Michael Brown} - JavaScript Architect at WebSolutions Inc\\
+\textbf{Emily Davis} - Full Stack Developer and Technical Writer
+
+% ACKNOWLEDGMENTS
+\clearpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{center}
+    \large\bfseries Acknowledgments
+\end{center}
+
+\vspace{1cm}
+
+Writing this book has been an incredible journey, and I would like to thank everyone who made it possible.
+
+First and foremost, I would like to thank my family for their unwavering support and patience during the long hours spent writing and revising this material.
+
+Special thanks to the team at TutorialsPoint for believing in this project and providing the resources needed to bring it to completion. The editorial team's meticulous attention to detail has greatly improved the quality of this book.
+
+I am grateful to the JavaScript community for their continuous innovation and for creating such a vibrant ecosystem. The open-source contributors who maintain the libraries and frameworks discussed in this book deserve special recognition.
+
+Thanks to my colleagues and students who provided valuable feedback on early drafts of this book. Your questions and suggestions have helped shape the content to be more practical and accessible.
+
+Finally, I would like to thank you, the reader, for choosing this book as your guide to learning JavaScript. I hope it serves you well in your programming journey.
+
+% PREFACE
+\clearpage
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{center}
+    \large\bfseries Preface
+\end{center}
+
+\vspace{1cm}
+
+JavaScript has evolved from a simple scripting language to one of the most important programming languages in the world. It powers the modern web, runs on servers through Node.js, and even builds mobile applications. This transformation makes JavaScript an essential skill for any programmer.
+
+This book is designed to take you from a complete beginner to a proficient JavaScript developer. We start with the fundamentals and gradually progress to advanced concepts, ensuring that you build a solid foundation along the way.
+
+\textbf{What Makes This Book Different}
+
+Unlike many programming books that focus solely on syntax, this book emphasizes practical application. Each concept is explained with real-world examples and includes exercises that reinforce your learning. We cover not just the "how" but also the "why" behind JavaScript's design decisions.
+
+\textbf{How to Use This Book}
+
+Each chapter builds upon the previous one, so it's recommended to read them in order if you're new to JavaScript. However, experienced developers can jump to specific topics of interest. Code examples are provided throughout, and I encourage you to type them out and experiment with variations.
+
+\textbf{Code Examples and Resources}
+
+All code examples in this book are available online at our GitHub repository. You'll also find additional resources, updates, and errata at www.tutorialspoint.com/javascript.
+
+Whether you're a student, a professional developer looking to expand your skills, or someone curious about programming, this book will provide you with the knowledge and confidence to write effective JavaScript code.
+
+Let's begin this exciting journey into the world of JavaScript!
+
+% Table of Contents
+\clearpage
+\tableofcontents
+
+% List of Code Listings
+\clearpage
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{List of Code Examples}
+
+\mainmatter
+% Reset chapter counter to start from 1
+\setcounter{chapter}{0}
+
+% CHAPTER 1
+\mychapter{OVERVIEW}
+\stepcounter{chapter}
+
+\mysection{What is JavaScript?}
+
+JavaScript is a dynamic computer programming language. It is lightweight and most commonly used as a part of web pages, whose implementations allow client-side script to interact with the user and make dynamic pages.
+
+Here's a simple example of JavaScript in action:
+
+\begin{lstlisting}[style=javascript, caption={Hello World in JavaScript}, label=lst:helloworld]
+// This is a simple JavaScript program
+console.log("Hello, World!");
+
+// Variables and functions
+let message = "Welcome to JavaScript";
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+console.log(greet("Student"));
+\end{lstlisting}
+
+\mysection{HTML, CSS, and JavaScript Integration}
+
+Modern web development involves three core technologies working together:
+
+\begin{lstlisting}[style=html, caption={Basic HTML Structure}, label=lst:htmlstructure]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript Example</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="title">Welcome</h1>
+    <button onclick="changeText()">Click Me</button>
+    <script src="script.js"></script>
+</body>
+</html>
+\end{lstlisting}
+
+\begin{lstlisting}[style=css, caption={CSS Styling}, label=lst:cssstyle]
+/* Basic CSS styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+#title {
+    color: #333;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+\end{lstlisting}
+
+% Continue with rest of content...
+
+\end{document}
