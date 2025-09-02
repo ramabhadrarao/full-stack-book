@@ -1,25 +1,30 @@
 \contentsline {chapter}{\numberline {1}BASIC JAVASCRIPT}{1}{}%
-\contentsline {section}{Introduction to JavaScript}{1}{}%
-\contentsline {subsection}{What is JavaScript?}{1}{}%
-\contentsline {subsection}{Key Characteristics of JavaScript}{1}{}%
-\contentsline {subsection}{JavaScript Engines}{1}{}%
-\contentsline {subsection}{Client-side vs Server-side JavaScript}{2}{}%
-\contentsline {section}{JavaScript Instructions and Statements}{3}{}%
-\contentsline {subsection}{Understanding Statements}{3}{}%
-\contentsline {subsection}{Types of Statements}{3}{}%
-\contentsline {subsection}{Statement Termination and Semicolons}{5}{}%
-\contentsline {section}{Comments in JavaScript}{6}{}%
-\contentsline {subsection}{Purpose of Comments}{6}{}%
-\contentsline {subsection}{Types of Comments}{6}{}%
-\contentsline {section}{Variables in JavaScript}{9}{}%
-\contentsline {subsection}{Understanding Variables}{9}{}%
-\contentsline {subsection}{Variable Declaration Keywords}{9}{}%
-\contentsline {subsection}{Variable Scope}{12}{}%
-\contentsline {subsection}{Hoisting}{14}{}%
-\contentsline {section}{Data Types in JavaScript}{16}{}%
-\contentsline {subsection}{Type System Overview}{16}{}%
-\contentsline {subsection}{Primitive Data Types}{16}{}%
-\contentsline {subsection}{Non-Primitive Type: Object}{24}{}%
-\contentsline {section}{Type Conversion and Coercion}{27}{}%
-\contentsline {subsection}{Explicit Type Conversion}{27}{}%
-\contentsline {subsection}{Implicit Type Coercion}{28}{}%
+\contentsline {section}{\numberline {1.1}Introduction to JavaScript}{1}{}%
+\contentsline {subsection}{\numberline {1.1.1}What is JavaScript?}{1}{}%
+\contentsline {subsection}{\numberline {1.1.2}JavaScript Evolution Timeline}{1}{}%
+\contentsline {subsection}{\numberline {1.1.3}Key People in JavaScript History}{2}{}%
+\contentsline {subsection}{\numberline {1.1.4}Key Characteristics of JavaScript}{2}{}%
+\contentsline {subsection}{\numberline {1.1.5}JavaScript Engines Comparison}{3}{}%
+\contentsline {subsection}{\numberline {1.1.6}Client-side vs Server-side JavaScript}{3}{}%
+\contentsline {subsection}{\numberline {1.1.7}ECMAScript Standards Evolution}{4}{}%
+\contentsline {subsection}{\numberline {1.1.8}Modern JavaScript Ecosystem}{4}{}%
+\contentsline {section}{\numberline {1.2}JavaScript Instructions and Statements}{5}{}%
+\contentsline {subsection}{\numberline {1.2.1}Understanding Statements}{5}{}%
+\contentsline {subsection}{\numberline {1.2.2}Types of Statements}{5}{}%
+\contentsline {subsection}{\numberline {1.2.3}Statement Termination and Semicolons}{7}{}%
+\contentsline {section}{\numberline {1.3}Comments in JavaScript}{8}{}%
+\contentsline {subsection}{\numberline {1.3.1}Purpose of Comments}{8}{}%
+\contentsline {subsection}{\numberline {1.3.2}Types of Comments}{8}{}%
+\contentsline {section}{\numberline {1.4}Variables in JavaScript}{10}{}%
+\contentsline {subsection}{\numberline {1.4.1}Understanding Variables}{10}{}%
+\contentsline {subsection}{\numberline {1.4.2}Variable Declaration Keywords}{11}{}%
+\contentsline {subsection}{\numberline {1.4.3}Variable Scope}{13}{}%
+\contentsline {subsection}{\numberline {1.4.4}Hoisting}{15}{}%
+\contentsline {section}{\numberline {1.5}Data Types in JavaScript}{17}{}%
+\contentsline {subsection}{\numberline {1.5.1}Type System Overview}{17}{}%
+\contentsline {subsection}{\numberline {1.5.2}Primitive Data Types}{17}{}%
+\contentsline {subsection}{\numberline {1.5.3}Non-Primitive Type: Object}{24}{}%
+\contentsline {section}{\numberline {1.6}Type Conversion and Coercion}{27}{}%
+\contentsline {subsection}{\numberline {1.6.1}Explicit Type Conversion}{27}{}%
+\contentsline {subsection}{\numberline {1.6.2}Implicit Type Coercion}{28}{}%
+\contentsline {chapter}{\numberline {2}DOM Manipulation and Events}{30}{}%

@@ -5,138 +5,484 @@
 \usepackage[left=0.75in,right=0.75in,top=0.75in,bottom=1in]{geometry}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric,shadows,patterns,positioning}
+\usetikzlibrary{shapes.geometric,shadows,patterns,positioning,arrows.meta,backgrounds,calc,decorations.pathreplacing,fit}
 \usepackage{enumitem}
 \usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
 \usepackage{helvet}
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{lstautogobble}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{fontawesome5}
+\usepackage{adjustbox}
 
 % Font settings
 \renewcommand{\familydefault}{\sfdefault}
 \setstretch{1.15}
 
-% Define colors
+% ============================================
+% CONSOLIDATED COLOR DEFINITIONS (DEFINED ONCE)
+% ============================================
 \definecolor{headerred}{RGB}{213,43,30}
 \definecolor{jsyellow}{RGB}{247,223,30}
 \definecolor{cssblue}{RGB}{38,77,228}
 \definecolor{htmlorange}{RGB}{228,77,38}
-\definecolor{codebg}{RGB}{245,245,245}
-\definecolor{codecomment}{RGB}{0,128,0}
-\definecolor{codekeyword}{RGB}{0,0,255}
-\definecolor{codestring}{RGB}{163,21,21}
+\definecolor{codebg}{RGB}{248,249,250}
+\definecolor{codeframe}{RGB}{222,226,230}
+\definecolor{linenumfg}{RGB}{108,117,125}
+\definecolor{codecomment}{RGB}{106,153,85}
+\definecolor{codekeyword}{RGB}{86,61,124}
+\definecolor{codestring}{RGB}{215,58,73}
+\definecolor{codenumber}{RGB}{0,92,197}
+\definecolor{codefunction}{RGB}{111,66,193}
+\definecolor{codeoperator}{RGB}{0,0,0}
+\definecolor{vscodebg}{RGB}{30,30,30}
+\definecolor{vscodestring}{RGB}{206,145,120}
+\definecolor{vscodekeyword}{RGB}{86,156,214}
+\definecolor{vscodecomment}{RGB}{106,153,85}
+\definecolor{vscodefunction}{RGB}{220,220,170}
+\definecolor{chapterbg}{RGB}{33,37,41}
+\definecolor{nodegreen}{RGB}{139,195,74}
+\definecolor{chromeblue}{RGB}{66,133,244}
+\definecolor{firefoxorange}{RGB}{255,149,0}
+\definecolor{safariblue}{RGB}{0,122,255}
+\definecolor{timelineblue}{RGB}{70,130,180}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{sectionblue}{RGB}{70,130,180}
+\definecolor{subsectiongreen}{RGB}{139,195,74}
+\definecolor{subsubsectiongray}{RGB}{108,117,125}
+\definecolor{lightbg}{RGB}{248,249,250}
+\definecolor{jsaccent}{RGB}{255,193,7}
+\definecolor{jsdark}{RGB}{50,50,50}
+\definecolor{pagebg}{RGB}{248,249,250}  % Define the missing pagebg color
 
-% Listings settings for advanced look
-\lstset{
+% Optional: Use page background color (comment out if not wanted)
+% \usepackage{pagecolor}
+% \pagecolor{pagebg}
+
+% ============================================
+% CODE LISTING STYLES
+% ============================================
+\lstdefinestyle{modernlight}{
     backgroundcolor=\color{codebg},
-    basicstyle=\ttfamily\small,
+    basicstyle=\ttfamily\footnotesize,
     breaklines=true,
     frame=single,
-    frameround=tttt,
-    framexleftmargin=5pt,
+    framesep=10pt,
+    framexleftmargin=10pt,
+    framexrightmargin=10pt,
+    framextopmargin=2pt,
+    framexbottommargin=2pt,
     numbers=left,
-    numberstyle=\tiny\color{gray},
-    numbersep=8pt,
+    numberstyle=\tiny\color{linenumfg}\sffamily,
+    numbersep=12pt,
+    xleftmargin=25pt,
     showstringspaces=false,
     keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\color{codecomment}\itshape,
     stringstyle=\color{codestring},
     tabsize=2,
-    autogobble=true,
     captionpos=t,
-    xleftmargin=15pt,
-    framexleftmargin=10pt,
-    framexrightmargin=5pt,
-    framextopmargin=5pt,
-    framexbottommargin=5pt,
-    rulecolor=\color{gray!30},
+    rulecolor=\color{codeframe},
+    aboveskip=20pt,
+    belowskip=15pt
+}
+
+\lstdefinestyle{vscodedark}{
+    backgroundcolor=\color{vscodebg},
+    basicstyle=\ttfamily\footnotesize\color{white},
+    breaklines=true,
+    frame=none,
+    numbers=left,
+    numberstyle=\tiny\color{gray!60}\sffamily,
+    numbersep=10pt,
+    xleftmargin=20pt,
+    showstringspaces=false,
+    keywordstyle=\color{vscodekeyword}\bfseries,
+    commentstyle=\color{vscodecomment}\itshape,
+    stringstyle=\color{vscodestring},
+    identifierstyle=\color{white},
+    tabsize=2,
+    captionpos=t,
+    aboveskip=20pt,
+    belowskip=15pt
+}
+
+\lstdefinestyle{modernminimal}{
+    backgroundcolor=\color{white},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=shadowbox,
+    framesep=8pt,
+    rulesepcolor=\color{gray!20},
+    shadowcolor=\color{gray!40},
+    shadowsize=4pt,
+    numbers=left,
+    numberstyle=\scriptsize\color{gray!60}\sffamily,
+    numbersep=10pt,
+    xleftmargin=20pt,
+    showstringspaces=false,
+    keywordstyle=\color{blue!60!black}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red!60!black},
+    tabsize=2,
+    captionpos=t,
+    aboveskip=15pt,
+    belowskip=12pt
+}
+
+\lstdefinestyle{bookstyle}{
+    backgroundcolor=\color{gray!3},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=leftline,
+    framesep=0pt,
+    frameround=ffff,
+    framexleftmargin=3pt,
+    numbers=left,
+    numberstyle=\tiny\color{gray!50}\sffamily,
+    numbersep=10pt,
+    xleftmargin=20pt,
+    showstringspaces=false,
+    keywordstyle=\color{black}\bfseries,
+    commentstyle=\color{gray!60}\itshape,
+    stringstyle=\color{black!80},
+    tabsize=2,
+    captionpos=t,
+    rulecolor=\color{jsyellow},
+    rulesep=2pt,
+    framerule=3pt,
     aboveskip=15pt,
     belowskip=10pt
 }
 
-% JavaScript style
-\lstdefinestyle{javascript}{
-    language=Java,
-    morekeywords={let, const, async, await, of, function, var, return, if, else, for, while, do, switch, case, break, continue, new, this, typeof, instanceof, true, false, null, undefined, class, extends, import, export, default, from, as, static, get, set, constructor, super, yield, promise, resolve, reject, then, catch, finally},
-    morecomment=[l]{//},
-    morecomment=[s]{/*}{*/},
-    morestring=[b]',
-    morestring=[b]",
-    morestring=[b]`,
+\lstdefinestyle{jsstyle}{
+    backgroundcolor=\color{jsyellow!5},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=tb,
+    framesep=5pt,
+    framexleftmargin=8pt,
+    numbers=left,
+    numberstyle=\tiny\color{gray!70}\sffamily,
+    numbersep=10pt,
+    xleftmargin=20pt,
+    showstringspaces=false,
     keywordstyle=\color{blue!70!black}\bfseries,
     commentstyle=\color{green!50!black}\itshape,
     stringstyle=\color{orange!80!black},
-    backgroundcolor=\color{blue!3},
-    frame=shadowbox,
-    rulesepcolor=\color{blue!20!gray!20},
-    escapeinside={(*@}{@*)}
+    tabsize=2,
+    captionpos=t,
+    rulecolor=\color{jsyellow!50},
+    framerule=2pt,
+    aboveskip=15pt,
+    belowskip=12pt
 }
 
-% Custom chapter command
+% JavaScript language definition
+\lstdefinelanguage{JavaScript}{
+    keywords={break, continue, delete, else, for, function, if, in, new, return, this, typeof, var, void, while, with, case, default, do, switch, throw, try, catch, finally, instanceof, class, const, let, async, await, extends, import, export, from, as, static, get, set, constructor, super, yield},
+    ndkeywords={true, false, null, undefined, NaN, Infinity},
+    sensitive=true,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    string=[b]',
+    morestring=[b]",
+    morestring=[b]`,
+}
+
+% Default listing settings
+\lstset{
+    style=modernlight,  % Changed to modernlight as default
+    language=JavaScript
+}
+
+% Custom timeline style
+\tikzset{
+    timeline/.style={
+        draw=timelineblue!70,
+        fill=timelineblue!20,
+        rounded corners=5pt,
+        minimum height=0.8cm,
+        minimum width=2.8cm,
+        text centered,
+        font=\footnotesize\bfseries,
+        text width=2.5cm,
+        align=center
+    },
+    milestone/.style={
+        draw=jsyellow!70,
+        fill=jsyellow!30,
+        circle,
+        minimum size=1cm,
+        font=\footnotesize\bfseries
+    },
+    feature/.style={
+        draw=blue!40,
+        fill=blue!10,
+        rounded corners=5pt,
+        minimum width=3cm,
+        minimum height=0.8cm,
+        text centered,
+        font=\footnotesize,
+        text width=2.8cm,
+        align=center
+    }
+}
+
+% ============================================
+% SECTIONING COMMANDS WITH PROPER MARKS
+% ============================================
+
+% CHAPTER COMMAND
 \newcommand{\mychapter}[1]{%
     \clearpage
-    \stepcounter{chapter}
+    \refstepcounter{chapter}
+    \setcounter{section}{0}
+    \setcounter{subsection}{0}
+    \setcounter{subsubsection}{0}
+    
+    % Update marks for headers
+    \markboth{\chaptername\ \thechapter.\ #1}{}%
+    
     \vspace*{-1in}
-    \begin{tcolorbox}[
-        colback=headerred,
-        coltext=white,
-        boxrule=0pt,
-        arc=0pt,
-        outer arc=0pt,
-        left=0pt,
-        right=0pt,
-        top=30pt,
-        bottom=30pt,
-        width=\textwidth,
-        enlarge left by=-0.75in,
-        enlarge right by=-0.75in,
-        width=\paperwidth
-    ]
-        \centering
-        \Huge\bfseries \thechapter.~#1
-    \end{tcolorbox}
-    \vspace{1em}
+    
+    % Full-width dramatic header
+    \noindent\begin{tikzpicture}[remember picture, overlay]
+        % Dark background
+        \fill[chapterbg] 
+            (current page.north west) 
+            rectangle 
+            ([yshift=-4cm]current page.north east);
+        
+        % Yellow accent stripe
+        \fill[jsyellow] 
+            ([yshift=-4cm]current page.north west) 
+            rectangle 
+            ([yshift=-4.3cm]current page.north east);
+        
+        % Chapter number in hexagon
+        \node[
+            regular polygon,
+            regular polygon sides=6,
+            draw=jsyellow,
+            fill=jsyellow,
+            minimum size=3cm,
+            rotate=30,
+            drop shadow={shadow xshift=3pt, shadow yshift=3pt, opacity=0.4}
+        ] at ([xshift=3.5cm, yshift=-2cm]current page.north west) (hexagon) {};
+        
+        \node[font=\fontsize{40}{40}\selectfont\bfseries, color=chapterbg] at (hexagon) {\thechapter};
+        
+        % Chapter label
+        \node[
+            font=\footnotesize\bfseries,
+            color=jsyellow!70,
+            anchor=west
+        ] at ([xshift=7cm, yshift=-0.8cm]current page.north west) {CHAPTER \thechapter};
+        
+        % Chapter title
+        \node[
+            font=\fontsize{30}{34}\selectfont\bfseries,
+            color=white,
+            anchor=west
+        ] at ([xshift=7cm, yshift=-2cm]current page.north west) {#1};
+        
+        % Decorative JS elements
+        \node[font=\fontsize{50}{50}\selectfont, color=jsyellow!20, rotate=15] 
+            at ([xshift=-3cm, yshift=-2.5cm]current page.north east) {\{~\}};
+        \node[font=\fontsize{35}{35}\selectfont, color=jsyellow!15, rotate=-10] 
+            at ([xshift=-5.5cm, yshift=-1.5cm]current page.north east) {//};
+    \end{tikzpicture}
+    
+    \vspace{4cm}
     \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}
+    \thispagestyle{plain}
 }
 
-% Section formatting
+% SECTION COMMAND
 \newcommand{\mysection}[1]{%
-    \vspace{0.3em}
-    {\large\bfseries\underline{#1}}
-    \vspace{0.2em}
-    \addcontentsline{toc}{section}{#1}
+    \vspace{1.2em}
+    \refstepcounter{section}
+    \setcounter{subsection}{0}
+    \setcounter{subsubsection}{0}
+    
+    % Update mark for headers
+    \markright{\thesection.\ #1}%
+    
+    \noindent\begin{tikzpicture}
+        % Full-width colored banner
+        \node[
+            fill=sectionblue!80,
+            minimum width=\textwidth,
+            minimum height=1.2cm,
+            anchor=west,
+            rounded corners=3pt,
+            inner sep=6pt
+        ] (banner) {};
+        
+        % Section number
+        \node[
+            anchor=west,
+            font=\bfseries\large,
+            text=white
+        ] at ([xshift=0.6cm]banner.west) {\thesection.};
+        
+        % Section title
+        \node[
+            anchor=west,
+            font=\bfseries\large,
+            text=white
+        ] at ([xshift=2cm]banner.west) {#1};
+    \end{tikzpicture}
+    
+    \vspace{0.5em}
+    \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}
 }
 
-% Subsection formatting
+% SUBSECTION COMMAND
 \newcommand{\mysubsection}[1]{%
-    \vspace{0.2em}
-    {\normalsize\bfseries #1}
-    \vspace{0.1em}
-    \addcontentsline{toc}{subsection}{#1}
+    \vspace{0.8em}
+    \refstepcounter{subsection}
+    \setcounter{subsubsection}{0}
+    
+    \noindent\begin{tikzpicture}
+        % Subsection container
+        \node[
+            draw=subsectiongreen!60,
+            fill=white,
+            minimum width=\textwidth,
+            minimum height=1cm,
+            rounded corners=5pt,
+            inner sep=0pt
+        ] (subbox) {};
+        
+        % Green accent bar on left
+        \fill[subsectiongreen!80] 
+            (subbox.west) 
+            rectangle 
+            ([xshift=0.3cm]subbox.west);
+        
+        % Subsection number
+        \node[
+            font=\small\bfseries,
+            color=subsectiongreen!90
+        ] at ([xshift=1.5cm]subbox.west) {\thesubsection};
+        
+        % Subsection title
+        \node[
+            font=\large\bfseries,
+            color=black,
+            anchor=west
+        ] at ([xshift=3cm]subbox.west) {#1};
+        
+        % Small icon
+        \node[
+            font=\small,
+            color=subsectiongreen!50
+        ] at ([xshift=-1cm]subbox.east) {\faAngleRight};
+    \end{tikzpicture}
+    
+    \vspace{0.3em}
+    \addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#1}
 }
 
-% Subsubsection formatting
+% SUBSUBSECTION COMMAND
 \newcommand{\mysubsubsection}[1]{%
-    \vspace{0.1em}
-    {\normalsize\itshape #1}
-    \vspace{0.1em}
+    \vspace{0.5em}
+    \refstepcounter{subsubsection}
+    
+    \noindent\begin{tikzpicture}
+        % Simple underlined style
+        \node[
+            anchor=west,
+            minimum width=\textwidth,
+            inner sep=0pt
+        ] (subsubbox) {
+            \color{subsubsectiongray}\small\bfseries 
+            \thesubsubsection\quad
+            \color{black}\normalsize\itshape #1
+        };
+        
+        % Subtle underline
+        \draw[gray!40, line width=0.5pt] 
+            (subsubbox.south west) -- 
+            ([xshift=\textwidth]subsubbox.south west);
+    \end{tikzpicture}
+    
+    \vspace{0.2em}
 }
 
-% Page styles
+% ============================================
+% PAGE STYLES
+% ============================================
+
 \pagestyle{fancy}
-\fancyhf{}
-\fancyhead[C]{Full Stack Development}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0pt}
+\fancyhf{} % Clear all headers and footers
+
+% Headers for oneside document
+\fancyhead[L]{\small\textsf{\textcolor{sectionblue!70}{\nouppercase{\leftmark}}}}
+\fancyhead[C]{\small\textsf{\textcolor{gray!50}{Full Stack Development}}}
+\fancyhead[R]{\small\textsf{\textcolor{sectionblue!70}{\nouppercase{\rightmark}}}}
+
+% Footer with page number
+\fancyfoot[C]{%
+    \tikz[baseline=(n.base)]{
+        \node[
+            fill=jsyellow!20,
+            draw=jsyellow!40,
+            rounded corners=3pt,
+            inner xsep=8pt,
+            inner ysep=2pt,
+            font=\small\bfseries
+        ] (n) {\textsf{\thepage}};
+    }%
+}
+
+% Header rule
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{%
+    \hbox to\headwidth{\color{sectionblue!30}\leaders\hrule height \headrulewidth\hfill}%
+}
 \renewcommand{\footrulewidth}{0pt}
 
+% Plain style for chapter opening pages
 \fancypagestyle{plain}{
     \fancyhf{}
-    \fancyfoot[C]{\thepage}
+    \fancyfoot[C]{%
+        \tikz[baseline=(n.base)]{
+            \node[
+                fill=jsyellow!20,
+                draw=jsyellow!40,
+                rounded corners=3pt,
+                inner xsep=8pt,
+                inner ysep=2pt,
+                font=\small\bfseries
+            ] (n) {\textsf{\thepage}};
+        }%
+    }
+    \renewcommand{\headrulewidth}{0pt}
 }
+
+% Configure marks
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+% Numbering format
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% Set numbering depth
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
 
 % Custom itemize
 \setlist[itemize]{
@@ -148,6 +494,9 @@
     label=\textbullet
 }
 
+% ============================================
+% DOCUMENT BEGINS HERE
+% ============================================
 \begin{document}
 \frontmatter
 
@@ -261,115 +610,451 @@ This book bridges the gap between frontend and backend development, enabling rea
 
 \mysection{Introduction to JavaScript}
 
+% Visual header with JavaScript logo
+\begin{center}
+\begin{tikzpicture}
+    % JavaScript logo background
+    \node[
+        draw=jsyellow!70,
+        fill=jsyellow!20,
+        minimum width=\textwidth,
+        minimum height=2.5cm,
+        rounded corners=10pt,
+        drop shadow
+    ] (bg) {};
+    
+    % JS logo on left
+    \node[
+        draw=jsyellow!90,
+        fill=jsyellow,
+        minimum width=1.8cm,
+        minimum height=1.8cm,
+        rounded corners=3pt
+    ] at (bg.west) [xshift=1.5cm] {\Huge\bfseries\color{black} JS};
+    
+    % Title in center
+    \node[font=\Large\bfseries] at (bg.center) {JavaScript: The Language of the Web};
+    
+    % Icons on right
+    \node[font=\Large] at (bg.east) [xshift=-2.5cm] {\faLaptopCode};
+    \node[font=\Large] at (bg.east) [xshift=-1.5cm] {\faServer};
+    \node[font=\Large] at (bg.east) [xshift=-0.5cm] {\faMobile};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
 \mysubsection{What is JavaScript?}
 
-JavaScript is a high-level, interpreted programming language that has become one of the core technologies of the World Wide Web, alongside HTML and CSS. It was created by Brendan Eich in 1995 in just 10 days at Netscape Communications Corporation. Originally called "Mocha," then "LiveScript," and finally renamed to "JavaScript" for marketing reasons (to capitalize on Java's popularity), despite having no relation to the Java programming language.
+JavaScript is a high-level, interpreted programming language that has become one of the core technologies of the World Wide Web, alongside HTML and CSS. Created by Brendan Eich in just 10 days at Netscape Communications in 1995, JavaScript has evolved from a simple scripting language to power complex applications across web, mobile, and server platforms.
 
-JavaScript is unique in its ubiquity—it's the only programming language that runs natively in web browsers, making it essential for client-side web development. With the creation of Node.js by Ryan Dahl in 2009, JavaScript expanded beyond browsers to server-side development, enabling developers to use a single language for full-stack development.
+\begin{tcolorbox}[
+    colback=blue!5,
+    colframe=blue!40,
+    title={\faInfoCircle\space Quick Facts About JavaScript},
+    fonttitle=\bfseries,
+    width=\textwidth
+]
+\begin{tabular}{ll|ll}
+\textbf{Created:} & May 1995 (10 days) & \textbf{Creator:} & Brendan Eich \\
+\textbf{Company:} & Netscape Communications & \textbf{Initial Name:} & Mocha \\
+\textbf{Renamed:} & LiveScript → JavaScript & \textbf{Standard:} & ECMAScript \\
+\textbf{Current:} & ES2024 (ES15) & \textbf{Usage:} & 98\% of websites \\
+\end{tabular}
+\end{tcolorbox}
+
+Originally named "Mocha," then "LiveScript," and finally "JavaScript" for marketing purposes (to capitalize on Java's popularity), JavaScript has no actual relationship with the Java programming language. The renaming was a strategic decision during the browser wars of the 1990s.
+
+% Historical Timeline
+\mysubsection{JavaScript Evolution Timeline}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85, transform shape]
+    % Main timeline line
+    \draw[thick, ->, >=Stealth] (0,0) -- (13,0) node[right, font=\small\bfseries] {Time};
+    
+    % Year markers and labels
+    \foreach \x/\year in {0/1995, 2/1997, 4/2005, 6/2009, 8/2015, 10/2020, 12/2024} {
+        \draw[thick] (\x,-0.15) -- (\x,0.15);
+        \node[below, font=\footnotesize\bfseries] at (\x,-0.3) {\year};
+    }
+    
+    % Events above timeline
+    \node[timeline, above] at (0,1) {JavaScript\\Created};
+    \node[timeline, above] at (2,1.8) {ECMAScript\\Standard};
+    \node[timeline, above] at (4,1) {AJAX\\Revolution};
+    \node[timeline, above] at (8,1.8) {ES6/ES2015\\Major Update};
+    \node[timeline, above] at (12,1) {Current\\ES2024};
+    
+    % Events below timeline  
+    \node[timeline, below, fill=nodegreen!20, draw=nodegreen!70] at (6,-1) {Node.js\\Created};
+    \node[timeline, below] at (10,-1) {ES2020\\Features};
+    
+    % Connection lines
+    \foreach \x in {0,2,4,6,8,10,12} {
+        \draw[dashed, gray!50] (\x,0) -- (\x,0.8);
+    }
+    \draw[dashed, nodegreen!60, line width=1.5pt] (6,0) -- (6,-0.8);
+    
+    % Descriptions
+    \node[font=\tiny, text width=2cm, align=center] at (0,-2) {Brendan Eich\\10 days};
+    \node[font=\tiny, text width=2cm, align=center] at (6,-2) {Ryan Dahl\\Server-side JS};
+    \node[font=\tiny, text width=2cm, align=center] at (8,-2) {Classes, Arrows\\Promises};
+\end{tikzpicture}
+\end{center}
+
+% Creator profiles
+\mysubsection{Key People in JavaScript History}
+
+
+% VERSION 2: Alternative approach using minipages for better control
+\begin{center}
+\begin{tikzpicture}
+    % Brendan Eich Card - Alternative style
+    \node[
+        draw=gray!40,
+        fill=gray!5,
+        rounded corners=8pt,
+        drop shadow,
+        text width=5cm,
+        minimum height=3.5cm,
+        inner sep=10pt
+    ] (brendan2) at (0,0) {
+        \begin{center}
+        \vspace{-0.3cm}
+        % Image with circular mask
+        \begin{tikzpicture}
+            \clip (0,0) circle (0.8cm);
+            \node[inner sep=0pt] at (0,0) {
+                \IfFileExists{brendan_eich.jpg}{
+                    \includegraphics[width=1.6cm,height=1.6cm,keepaspectratio]{brendan_eich.jpg}
+                }{
+                    \color{gray!40}\Huge\faUserCircle
+                }
+            };
+            \draw[gray!50, line width=1pt] (0,0) circle (0.8cm);
+        \end{tikzpicture}
+        
+        \vspace{0.2cm}
+        {\bfseries Brendan Eich}\\
+        {\small JavaScript Creator}\\
+        {\footnotesize\color{gray} 1995 - Netscape}\\
+        {\footnotesize\itshape Co-founded Mozilla}
+        \end{center}
+    };
+    
+    % Ryan Dahl Card - Alternative style
+    \node[
+        draw=gray!40,
+        fill=gray!5,
+        rounded corners=8pt,
+        drop shadow,
+        text width=5cm,
+        minimum height=3.5cm,
+        inner sep=10pt
+    ] (ryan2) at (6.5,0) {
+        \begin{center}
+        \vspace{-0.3cm}
+        % Image with circular mask
+        \begin{tikzpicture}
+            \clip (0,0) circle (0.8cm);
+            \node[inner sep=0pt] at (0,0) {
+                \IfFileExists{ryan_dahl.jpg}{
+                    \includegraphics[width=1.6cm,height=1.6cm,keepaspectratio]{ryan_dahl.jpg}
+                }{
+                    \color{gray!40}\Huge\faUserCircle
+                }
+            };
+            \draw[gray!50, line width=1pt] (0,0) circle (0.8cm);
+        \end{tikzpicture}
+        
+        \vspace{0.2cm}
+        {\bfseries Ryan Dahl}\\
+        {\small Node.js Creator}\\
+        {\footnotesize\color{gray} 2009 - Server JS}\\
+        {\footnotesize\itshape Also created Deno}
+        \end{center}
+    };
+\end{tikzpicture}
+\end{center}
 
 \mysubsection{Key Characteristics of JavaScript}
 
 JavaScript has several distinctive features that set it apart from other programming languages:
 
-\begin{itemize}
-    \item \textbf{Dynamic Typing:} Variables can hold values of any type without declaring the type explicitly. The type is determined at runtime, not compile time.
-    \item \textbf{Interpreted Language:} JavaScript code is executed directly without a separate compilation step, though modern engines use Just-In-Time (JIT) compilation for performance.
-    \item \textbf{Prototype-based Object-Oriented Programming:} Objects can inherit directly from other objects without the need for classes (though ES6 introduced class syntax).
-    \item \textbf{First-class Functions:} Functions are treated as values—they can be assigned to variables, passed as arguments, and returned from other functions.
-    \item \textbf{Event-driven Programming:} JavaScript responds to user interactions (clicks, keyboard input) and system events asynchronously.
-    \item \textbf{Multi-paradigm:} Supports procedural, object-oriented, and functional programming paradigms.
-    \item \textbf{Weakly Typed:} Automatic type conversion (coercion) occurs when operators are applied to values of different types.
-    \item \textbf{Case-sensitive:} JavaScript distinguishes between uppercase and lowercase letters in identifiers.
-\end{itemize}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % Central node
+    \node[
+        draw=jsyellow!70,
+        fill=jsyellow!30,
+        circle,
+        minimum size=2cm,
+        font=\small\bfseries,
+        align=center
+    ] (center) {JS\\Core};
+    
+    % Feature nodes
+    \foreach \angle/\name/\desc in {
+        0/{Dynamic Typing}/{Variables without types},
+        45/{Interpreted}/{No compilation},
+        90/{Event-driven}/{User interactions},
+        135/{Prototype-based}/{Object inheritance},
+        180/{First-class Functions}/{Functions as values},
+        225/{Multi-paradigm}/{OOP, Functional},
+        270/{Weakly Typed}/{Auto conversion},
+        315/{Case-sensitive}/{A != a}
+    } {
+        \node[feature] (\angle) at (\angle:3.5cm) {\name};
+        \draw[gray!40] (center) -- (\angle);
+        \node[font=\tiny, text width=2.5cm, align=center] at (\angle:4.8cm) {\desc};
+    }
+\end{tikzpicture}
+\end{center}
 
-\mysubsection{JavaScript Engines}
+\mysubsection{JavaScript Engines Comparison}
 
-JavaScript code is executed by JavaScript engines, which are programs that interpret and execute JavaScript code. Each major browser uses a different JavaScript engine:
+Modern JavaScript engines compile and optimize code for performance. Each browser vendor maintains their own engine:
 
-\mysubsubsection{V8 Engine (Google)}
-\begin{itemize}
-    \item Used by Google Chrome, Microsoft Edge (Chromium-based), Node.js, and Electron
-    \item Written in C++
-    \item Features advanced optimizations like hidden classes and inline caching
-    \item Compiles JavaScript directly to native machine code
-    \item Uses Ignition (interpreter) and TurboFan (optimizing compiler)
-\end{itemize}
-
-\mysubsubsection{SpiderMonkey (Mozilla)}
-\begin{itemize}
-    \item Used by Mozilla Firefox
-    \item The first JavaScript engine, created by Brendan Eich
-    \item Written in C and C++
-    \item Uses multiple JIT compilers for optimization
-\end{itemize}
-
-\mysubsubsection{JavaScriptCore (Apple)}
-\begin{itemize}
-    \item Used by Safari and WebKit-based browsers
-    \item Also known as Nitro
-    \item Written in C++
-    \item Features a four-tier JIT compilation system
-\end{itemize}
-
-\mysubsubsection{Chakra (Microsoft - Legacy)}
-\begin{itemize}
-    \item Used by Internet Explorer and Legacy Microsoft Edge
-    \item Now deprecated in favor of V8 in Chromium-based Edge
-    \item Featured parallel JIT compilation
-\end{itemize}
+\begin{table}[h]
+\centering
+\caption{Comparison of Major JavaScript Engines}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\rowcolor{gray!20}
+\textbf{Feature} & \textbf{V8} & \textbf{SpiderMonkey} & \textbf{JavaScriptCore} & \textbf{Chakra} \\
+\hline
+\textbf{Developer} & Google & Mozilla & Apple & Microsoft \\
+\hline
+\textbf{Used In} & Chrome, Edge, Node.js & Firefox & Safari, WebKit & IE (Deprecated) \\
+\hline
+\textbf{Written In} & C++ & C/C++ & C++ & C++ \\
+\hline
+\textbf{First Release} & 2008 & 1995 & 2001 & 2010 \\
+\hline
+\textbf{JIT Compiler} & TurboFan & IonMonkey & FTL JIT & Parallel JIT \\
+\hline
+\textbf{Interpreter} & Ignition & SpiderMonkey & LLInt & ByteCode \\
+\hline
+\textbf{Key Features} & Hidden classes, & Type inference, & 4-tier compilation, & Parallel compilation \\
+                        & Inline caching & Shape analysis & DFG optimizer & (Deprecated 2020) \\
+\hline
+\textbf{Status} & \cellcolor{green!20}Active & \cellcolor{green!20}Active & \cellcolor{green!20}Active & \cellcolor{red!20}Deprecated \\
+\hline
+\end{tabular}%
+}
+\end{table}
 
 \mysubsection{Client-side vs Server-side JavaScript}
 
-JavaScript can run in two primary environments, each with distinct capabilities and limitations:
+JavaScript can run in two primary environments, each with distinct capabilities:
 
-\mysubsubsection{Client-side JavaScript (Browser Environment)}
+\begin{table}[h]
+\centering
+\caption{Client-side vs Server-side JavaScript Environments}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|p{6cm}|p{6cm}|}
+\hline
+\rowcolor{gray!20}
+\textbf{Aspect} & \textbf{Client-side (Browser)} & \textbf{Server-side (Node.js)} \\
+\hline
+\textbf{Runtime} & Web Browser & Node.js Runtime \\
+\hline
+\textbf{Engine} & V8, SpiderMonkey, JavaScriptCore & Primarily V8 \\
+\hline
+\textbf{Purpose} & UI interactivity, DOM manipulation & Backend logic, APIs, data processing \\
+\hline
+\textbf{File System} & \cellcolor{red!10}No access (security sandbox) & \cellcolor{green!10}Full file system access \\
+\hline
+\textbf{Database} & \cellcolor{red!10}No direct connection & \cellcolor{green!10}Direct database connectivity \\
+\hline
+\textbf{DOM Access} & \cellcolor{green!10}Full DOM API & \cellcolor{red!10}No DOM available \\
+\hline
+\textbf{Network} & Limited (CORS restrictions) & Full network capabilities \\
+\hline
+\textbf{Global Object} & \texttt{window} & \texttt{global} or \texttt{globalThis} \\
+\hline
+\textbf{Module System} & ES6 modules, AMD & CommonJS, ES6 modules \\
+\hline
+\textbf{Package Manager} & CDN, npm (build tools) & npm, yarn, pnpm \\
+\hline
+\textbf{Main APIs} & DOM, Fetch, WebStorage, Canvas & fs, http, process, crypto, stream \\
+\hline
+\textbf{Security} & Sandboxed environment & Full system access \\
+\hline
+\textbf{Concurrency} & Web Workers, async/await & Event loop, Worker threads \\
+\hline
+\end{tabular}%
+}
+\end{table}
 
-Client-side JavaScript runs in web browsers and is primarily responsible for creating interactive web pages. It has access to browser-specific APIs but operates in a sandboxed environment for security.
+% Visual comparison
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={
+        rounded corners=10pt,
+        minimum width=5cm,
+        minimum height=4.5cm,
+        align=center,
+        font=\small
+    }
+]
+    % Client-side box
+    \node[box, draw=blue!60, fill=blue!10] (client) at (0,0) {};
+    
+    % Client content
+    \node[font=\bfseries] at ([yshift=1.8cm]client.center) {\faGlobe\space Browser JavaScript};
+    \node[align=left, font=\footnotesize] at (client.center) {
+        \textbf{Can do:}\\
+        • Manipulate DOM\\
+        • Handle events\\
+        • Make AJAX calls\\
+        • Use browser APIs\\[0.2cm]
+        \textbf{Cannot do:}\\
+        • Access files\\
+        • Query databases\\
+        • Run system commands
+    };
+    
+    % Server-side box
+    \node[box, draw=nodegreen!60, fill=nodegreen!10] (server) at (6,0) {};
+    
+    % Server content
+    \node[font=\bfseries] at ([yshift=1.8cm]server.center) {\faServer\space Node.js JavaScript};
+    \node[align=left, font=\footnotesize] at (server.center) {
+        \textbf{Can do:}\\
+        • File operations\\
+        • Database queries\\
+        • Create servers\\
+        • System access\\[0.2cm]
+        \textbf{Cannot do:}\\
+        • Access DOM\\
+        • Use browser APIs\\
+        • Direct UI updates
+    };
+    
+    % Connection
+    \draw[<->, thick, orange!60, line width=1.5pt] 
+        (client.east) -- (server.west) 
+        node[midway, above, font=\footnotesize\bfseries] {HTTP/WebSocket}
+        node[midway, below, font=\tiny] {Data Exchange};
+\end{tikzpicture}
+\end{center}
 
-\textbf{Capabilities:}
-\begin{itemize}
-    \item DOM (Document Object Model) manipulation for changing HTML/CSS
-    \item Event handling for user interactions (clicks, keyboard, mouse events)
-    \item Browser APIs (Geolocation, Web Storage, Canvas, WebGL)
-    \item AJAX/Fetch API for asynchronous HTTP requests
-    \item Local Storage and Session Storage for client-side data persistence
-    \item Service Workers for offline functionality and PWAs
-    \item WebSockets for real-time communication
-\end{itemize}
+\mysubsection{ECMAScript Standards Evolution}
 
-\textbf{Limitations:}
-\begin{itemize}
-    \item No direct file system access (security restriction)
-    \item Cannot directly connect to databases
-    \item Subject to Same-Origin Policy (CORS restrictions)
-    \item Limited access to system resources
-    \item Dependent on browser compatibility
-\end{itemize}
+ECMAScript is the standard upon which JavaScript is based. The evolution shows major feature additions:
 
-\mysubsubsection{Server-side JavaScript (Node.js Environment)}
+\begin{center}
+\begin{tikzpicture}[
+    version/.style={
+        draw=#1!60,
+        fill=#1!20,
+        rounded corners=5pt,
+        minimum width=2.2cm,
+        minimum height=0.7cm,
+        font=\footnotesize\bfseries,
+        align=center
+    }
+]
+    % Timeline arrow
+    \draw[thick, ->, >=Stealth] (0,0) -- (12,0) node[right, font=\small] {Present};
+    
+    % ES versions with alternating heights for clarity
+    \node[version=red] at (0,0.8) {ES1\\1997};
+    \node[version=orange] at (2,1.3) {ES3\\1999};
+    \node[version=blue] at (4,0.8) {ES5\\2009};
+    \node[version=green] at (6,1.3) {ES6\\2015};
+    \node[version=purple] at (8,0.8) {ES2017};
+    \node[version=teal] at (10,1.3) {ES2020};
+    \node[version=brown] at (11.5,0.8) {ES2024};
+    
+    % Feature callouts
+    \node[font=\tiny, align=center] at (0,-0.8) {First\\Standard};
+    \node[font=\tiny, align=center] at (4,-0.8) {Strict mode\\JSON};
+    \node[font=\tiny, align=center] at (6,-0.8) {Classes\\Promises};
+    \node[font=\tiny, align=center] at (8,-0.8) {Async\\Await};
+    \node[font=\tiny, align=center] at (10,-0.8) {Optional\\Chaining};
+\end{tikzpicture}
+\end{center}
 
-Server-side JavaScript runs on servers using Node.js runtime, enabling JavaScript to be used for backend development with full system access.
+\mysubsection{Modern JavaScript Ecosystem}
 
-\textbf{Capabilities:}
-\begin{itemize}
-    \item Full file system access (read, write, delete files)
-    \item Direct database connections (MongoDB, MySQL, PostgreSQL)
-    \item Network programming (create HTTP/HTTPS servers, TCP/UDP sockets)
-    \item Process management and child processes
-    \item Access to npm ecosystem (world's largest package repository)
-    \item System information and OS interaction
-    \item Build tools and task automation
-\end{itemize}
+The JavaScript ecosystem has grown exponentially, encompassing various frameworks, tools, and platforms:
 
-\textbf{Characteristics:}
-\begin{itemize}
-    \item Event-driven, non-blocking I/O model
-    \item Single-threaded with event loop
-    \item High performance through V8 engine
-    \item No DOM or browser-specific APIs
-    \item Can create RESTful APIs and microservices
-\end{itemize}
+\begin{center}
+\begin{tikzpicture}[
+    eco/.style={
+        draw=#1!60,
+        fill=#1!20,
+        rounded corners=6pt,
+        minimum width=2.5cm,
+        minimum height=0.9cm,
+        font=\footnotesize,
+        align=center
+    }
+]
+    % Core
+    \node[
+        eco=jsyellow,
+        minimum width=3.5cm,
+        minimum height=1.2cm,
+        font=\small\bfseries
+    ] (core) at (0,0) {JavaScript};
+    
+    % Frontend frameworks
+    \node[eco=blue] (react) at (-3,1.8) {React};
+    \node[eco=green] (vue) at (0,1.8) {Vue.js};
+    \node[eco=red] (angular) at (3,1.8) {Angular};
+    
+    % Runtime environments
+    \node[eco=nodegreen] (node) at (-3,-1.8) {Node.js};
+    \node[eco=purple] (deno) at (0,-1.8) {Deno};
+    \node[eco=orange] (bun) at (3,-1.8) {Bun};
+    
+    % Build tools
+    \node[eco=gray] (webpack) at (-4.5,0) {Webpack};
+    \node[eco=gray] (vite) at (4.5,0) {Vite};
+    
+    % Package managers
+    \node[eco=brown] (npm) at (-2,-3) {npm};
+    \node[eco=brown] (yarn) at (0,-3) {yarn};
+    \node[eco=brown] (pnpm) at (2,-3) {pnpm};
+    
+    % Category labels
+    \node[font=\tiny\bfseries, color=gray] at (0,2.6) {Frontend Frameworks};
+    \node[font=\tiny\bfseries, color=gray] at (0,-1) {Runtime Environments};
+    \node[font=\tiny\bfseries, color=gray] at (0,-2.4) {Package Managers};
+    \node[font=\tiny\bfseries, color=gray] at (-4.5,0.6) {Build Tools};
+    
+    % Connections
+    \foreach \node in {react,vue,angular,node,deno,bun,webpack,vite} {
+        \draw[gray!30, dashed] (core) -- (\node);
+    }
+\end{tikzpicture}
+\end{center}
 
+% Statistics box
+\begin{tcolorbox}[
+    colback=jsyellow!10,
+    colframe=jsyellow!50,
+    title={\faChartLine\space JavaScript Impact and Statistics (2024)},
+    fonttitle=\bfseries,
+    width=\textwidth
+]
+\begin{center}
+\begin{tabular}{p{3cm}p{3cm}|p{3cm}p{3cm}}
+\textbf{98\%} & of all websites & \textbf{2.3M+} & npm packages \\
+\textbf{65\%} & developers use JS & \textbf{28M+} & GitHub repos \\
+\textbf{\#1} & on Stack Overflow & \textbf{12M+} & developers worldwide \\
+\end{tabular}
+\end{center}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+JavaScript's journey from a simple scripting language to the backbone of modern web development demonstrates its adaptability and the strength of its community. Today, JavaScript powers everything from simple websites to complex applications, mobile apps, desktop software, and even IoT devices.
 \mysection{JavaScript Instructions and Statements}
 
 \mysubsection{Understanding Statements}
@@ -383,7 +1068,7 @@ JavaScript has several categories of statements:
 \mysubsubsection{Expression Statements}
 These evaluate to a value and often have side effects:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Expression Statements}}, label=lst:expr-statements]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Expression Statements}}, label=lst:expr-statements]
 // Assignment expression
 x = 5;
 
@@ -403,7 +1088,7 @@ result = (a + b) * c / d;
 \mysubsubsection{Declaration Statements}
 These declare variables, functions, or classes:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Declaration Statements}}, label=lst:decl-statements]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Declaration Statements}}, label=lst:decl-statements]
 // Variable declarations
 var oldStyle = "function-scoped";
 let modernVariable = "block-scoped";
@@ -430,7 +1115,7 @@ const {name, age} = person;
 \mysubsubsection{Control Flow Statements}
 These control the execution flow of the program:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Control Flow Statements}}, label=lst:control-statements]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Control Flow Statements}}, label=lst:control-statements]
 // Conditional statements
 if (condition) {
     // code block
@@ -479,7 +1164,7 @@ try {
 
 JavaScript uses semicolons to mark the end of statements, though they are often optional due to Automatic Semicolon Insertion (ASI):
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Semicolon Usage and ASI}}, label=lst:semicolons]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Semicolon Usage and ASI}}, label=lst:semicolons]
 // Explicit semicolons (recommended)
 let a = 5;
 let b = 10;
@@ -537,7 +1222,7 @@ Comments are non-executable text in your code that serve multiple purposes:
 
 Single-line comments start with \texttt{//} and continue to the end of the line:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Single-line Comments}}, label=lst:single-comments]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Single-line Comments}}, label=lst:single-comments]
 // This is a single-line comment
 let userName = "Alice"; // This is an inline comment
 
@@ -556,7 +1241,7 @@ let userName = "Alice"; // This is an inline comment
 
 Multi-line comments are enclosed between \texttt{/*} and \texttt{*/}:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Multi-line Comments}}, label=lst:multi-comments]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Multi-line Comments}}, label=lst:multi-comments]
 /* 
    This is a multi-line comment.
    It can span multiple lines.
@@ -582,7 +1267,7 @@ function oldImplementation() {
 
 JSDoc comments are special multi-line comments used for documentation generation:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{JSDoc Documentation Comments}}, label=lst:jsdoc-comments]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{JSDoc Documentation Comments}}, label=lst:jsdoc-comments]
 /**
  * Calculates the area of a rectangle.
  * @param {number} width - The width of the rectangle
@@ -661,7 +1346,7 @@ JavaScript provides three keywords for declaring variables, each with different 
 
 The \texttt{var} keyword is the original way to declare variables in JavaScript (ES5 and earlier):
 
-\begin{lstlisting}[style=javascript, caption={\textbf{var Declaration Characteristics}}, label=lst:var-details]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{var Declaration Characteristics}}, label=lst:var-details]
 // Basic var declaration
 var message = "Hello";
 var count = 0;
@@ -699,7 +1384,7 @@ console.log(window.globalVar); // "I'm global" (in browser)
 
 The \texttt{let} keyword was introduced in ES6 for block-scoped variable declaration:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{let Declaration Characteristics}}, label=lst:let-details]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{let Declaration Characteristics}}, label=lst:let-details]
 // Basic let declaration
 let name = "John";
 let age = 30;
@@ -745,7 +1430,7 @@ console.log(outer); // "outer"
 
 The \texttt{const} keyword declares block-scoped constants with immutable bindings:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{const Declaration Characteristics}}, label=lst:const-details]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{const Declaration Characteristics}}, label=lst:const-details]
 // Basic const declaration (must be initialized)
 const PI = 3.14159;
 const MAX_SIZE = 100;
@@ -808,7 +1493,7 @@ Scope determines where variables can be accessed in your code:
 
 Variables declared outside any function or block have global scope:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Global Scope}}, label=lst:global-scope]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Global Scope}}, label=lst:global-scope]
 // Global variables
 var globalVar = "I'm global with var";
 let globalLet = "I'm global with let";
@@ -831,7 +1516,7 @@ console.log(global.globalVar); // Works (Node.js)
 
 Variables declared inside a function are only accessible within that function:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Function Scope}}, label=lst:function-scope]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Function Scope}}, label=lst:function-scope]
 function demonstrateFunctionScope() {
     var functionVar = "Only in function";
     let functionLet = "Also only in function";
@@ -858,7 +1543,7 @@ demonstrateFunctionScope();
 
 Variables declared with \texttt{let} and \texttt{const} inside a block are only accessible within that block:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Block Scope}}, label=lst:block-scope]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Block Scope}}, label=lst:block-scope]
 // Block scope with different keywords
 {
     var blockVar = "I escape the block";
@@ -897,7 +1582,7 @@ switch (true) {
 
 Hoisting is JavaScript's behavior of moving declarations to the top of their scope during compilation:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Complete Hoisting Examples}}, label=lst:hoisting-complete]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Complete Hoisting Examples}}, label=lst:hoisting-complete]
 // var hoisting
 console.log(varVariable); // undefined (declared but not initialized)
 var varVariable = "Now initialized";
@@ -968,7 +1653,7 @@ Primitive types are immutable and stored directly in the variable:
 
 The Number type represents both integers and floating-point numbers:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Number Type - Complete Examples}}, label=lst:number-type]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Number Type - Complete Examples}}, label=lst:number-type]
 // Integer literals
 let decimal = 42;
 let negative = -100;
@@ -1056,7 +1741,7 @@ console.log(Math.E); // 2.718281828459045
 
 Strings represent textual data as a sequence of characters:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{String Type - Complete Examples}}, label=lst:string-type]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{String Type - Complete Examples}}, label=lst:string-type]
 // String creation
 let single = 'Single quotes';
 let double = "Double quotes";
@@ -1141,7 +1826,7 @@ console.log("test@email.com".match(/@/)); // ["@"]
 
 Boolean represents logical values true or false:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Boolean Type and Truthy/Falsy Values}}, label=lst:boolean-type]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Boolean Type and Truthy/Falsy Values}}, label=lst:boolean-type]
 // Boolean literals
 let isTrue = true;
 let isFalse = false;
@@ -1203,7 +1888,7 @@ let boolValue2 = !!0; // false
 
 Undefined and null represent absence of value:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Undefined and Null Types}}, label=lst:undefined-null]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Undefined and Null Types}}, label=lst:undefined-null]
 // Undefined - variable declared but not assigned
 let undefinedVar;
 console.log(undefinedVar); // undefined
@@ -1270,7 +1955,7 @@ console.log(user?.name); // undefined (no error)
 
 Symbols are unique identifiers introduced in ES6:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Symbol Type}}, label=lst:symbol-type]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Symbol Type}}, label=lst:symbol-type]
 // Creating symbols
 let sym1 = Symbol();
 let sym2 = Symbol("description");
@@ -1322,7 +2007,7 @@ console.log(Symbol.keyFor(globalSym1)); // "app.id"
 
 BigInt represents arbitrarily large integers (ES2020):
 
-\begin{lstlisting}[style=javascript, caption={\textbf{BigInt Type}}, label=lst:bigint-type]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{BigInt Type}}, label=lst:bigint-type]
 // Creating BigInts
 let bigInt1 = 123n;
 let bigInt2 = BigInt(456);
@@ -1364,7 +2049,7 @@ console.log(bigSafeInt + 2n); // 9007199254740993n (correct)
 
 Objects are complex data types that can contain multiple values:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Object Type - Complete Reference}}, label=lst:object-complete]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Object Type - Complete Reference}}, label=lst:object-complete]
 // Object literal creation
 let person = {
     firstName: "John",
@@ -1490,7 +2175,7 @@ let dog = new Animal("Buddy", "dog");
 
 Explicit conversion (type casting) is when you manually convert from one type to another:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Explicit Type Conversion Methods}}, label=lst:explicit-conversion]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Explicit Type Conversion Methods}}, label=lst:explicit-conversion]
 // Converting to String
 String(123); // "123"
 String(true); // "true"
@@ -1542,7 +2227,7 @@ Boolean(undefined); // false
 
 JavaScript automatically converts types when needed:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Implicit Type Coercion Examples}}, label=lst:implicit-coercion]
+\begin{lstlisting}[style=vscodedark, caption={\textbf{Implicit Type Coercion Examples}}, label=lst:implicit-coercion]
 // String coercion
 "5" + 3; // "53" (number to string)
 "Hello " + true; // "Hello true"
@@ -1577,5 +2262,6 @@ false == 0; // true
 
 % End of enhanced Chapter 1
 % Additional chapters would continue with similar detail...
-
+\mychapter{DOM Manipulation and Events}
+hello
 \end{document}
