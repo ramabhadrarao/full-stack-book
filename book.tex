@@ -110,6 +110,21 @@
     \addcontentsline{toc}{section}{#1}
 }
 
+% Subsection formatting
+\newcommand{\mysubsection}[1]{%
+    \vspace{0.2em}
+    {\normalsize\bfseries #1}
+    \vspace{0.1em}
+    \addcontentsline{toc}{subsection}{#1}
+}
+
+% Subsubsection formatting
+\newcommand{\mysubsubsection}[1]{%
+    \vspace{0.1em}
+    {\normalsize\itshape #1}
+    \vspace{0.1em}
+}
+
 % Page styles
 \pagestyle{fancy}
 \fancyhf{}
@@ -246,585 +261,1321 @@ This book bridges the gap between frontend and backend development, enabling rea
 
 \mysection{Introduction to JavaScript}
 
-JavaScript is a high-level, interpreted programming language that has become one of the core technologies of the World Wide Web. Created by Brendan Eich in 1995 in just 10 days at Netscape Communications, JavaScript has evolved from a simple scripting language to power complex web applications, server-side development through Node.js (created by Ryan Dahl in 2009), and even mobile applications.
+\mysubsection{What is JavaScript?}
 
-\textbf{Key Characteristics of JavaScript:}
+JavaScript is a high-level, interpreted programming language that has become one of the core technologies of the World Wide Web, alongside HTML and CSS. It was created by Brendan Eich in 1995 in just 10 days at Netscape Communications Corporation. Originally called "Mocha," then "LiveScript," and finally renamed to "JavaScript" for marketing reasons (to capitalize on Java's popularity), despite having no relation to the Java programming language.
+
+JavaScript is unique in its ubiquity—it's the only programming language that runs natively in web browsers, making it essential for client-side web development. With the creation of Node.js by Ryan Dahl in 2009, JavaScript expanded beyond browsers to server-side development, enabling developers to use a single language for full-stack development.
+
+\mysubsection{Key Characteristics of JavaScript}
+
+JavaScript has several distinctive features that set it apart from other programming languages:
+
 \begin{itemize}
-    \item \textbf{Dynamic Typing:} Variables can hold values of any type without declaring the type
-    \item \textbf{Interpreted:} No compilation step required; code is executed directly
-    \item \textbf{Prototype-based:} Objects can inherit directly from other objects
-    \item \textbf{First-class Functions:} Functions are treated as values
-    \item \textbf{Event-driven:} Responds to user interactions and system events
-    \item \textbf{Multi-paradigm:} Supports procedural, object-oriented, and functional programming
+    \item \textbf{Dynamic Typing:} Variables can hold values of any type without declaring the type explicitly. The type is determined at runtime, not compile time.
+    \item \textbf{Interpreted Language:} JavaScript code is executed directly without a separate compilation step, though modern engines use Just-In-Time (JIT) compilation for performance.
+    \item \textbf{Prototype-based Object-Oriented Programming:} Objects can inherit directly from other objects without the need for classes (though ES6 introduced class syntax).
+    \item \textbf{First-class Functions:} Functions are treated as values—they can be assigned to variables, passed as arguments, and returned from other functions.
+    \item \textbf{Event-driven Programming:} JavaScript responds to user interactions (clicks, keyboard input) and system events asynchronously.
+    \item \textbf{Multi-paradigm:} Supports procedural, object-oriented, and functional programming paradigms.
+    \item \textbf{Weakly Typed:} Automatic type conversion (coercion) occurs when operators are applied to values of different types.
+    \item \textbf{Case-sensitive:} JavaScript distinguishes between uppercase and lowercase letters in identifiers.
 \end{itemize}
 
-\textbf{JavaScript Engines:}
+\mysubsection{JavaScript Engines}
 
-JavaScript code is executed by JavaScript engines. Each browser uses a different engine:
+JavaScript code is executed by JavaScript engines, which are programs that interpret and execute JavaScript code. Each major browser uses a different JavaScript engine:
+
+\mysubsubsection{V8 Engine (Google)}
 \begin{itemize}
-    \item \textbf{V8:} Used by Google Chrome and Node.js (developed by Google)
-    \item \textbf{SpiderMonkey:} Used by Mozilla Firefox
-    \item \textbf{JavaScriptCore:} Used by Safari (Apple)
-    \item \textbf{Chakra:} Used by Internet Explorer and Legacy Microsoft Edge
+    \item Used by Google Chrome, Microsoft Edge (Chromium-based), Node.js, and Electron
+    \item Written in C++
+    \item Features advanced optimizations like hidden classes and inline caching
+    \item Compiles JavaScript directly to native machine code
+    \item Uses Ignition (interpreter) and TurboFan (optimizing compiler)
 \end{itemize}
 
-\textbf{Client-side vs Server-side JavaScript:}
-
+\mysubsubsection{SpiderMonkey (Mozilla)}
 \begin{itemize}
-    \item \textbf{Client-side (Browser):} 
-    \begin{itemize}
-        \item Runs in web browsers
-        \item Manipulates DOM
-        \item Handles user interactions
-        \item Makes AJAX requests
-        \item Has access to browser APIs
-        \item Restricted file system access for security
-    \end{itemize}
-    
-    \item \textbf{Server-side (Node.js):}
-    \begin{itemize}
-        \item Runs on servers
-        \item Full file system access
-        \item Can connect to databases
-        \item Creates HTTP servers
-        \item No DOM access
-        \item Can use npm packages
-    \end{itemize}
+    \item Used by Mozilla Firefox
+    \item The first JavaScript engine, created by Brendan Eich
+    \item Written in C and C++
+    \item Uses multiple JIT compilers for optimization
+\end{itemize}
+
+\mysubsubsection{JavaScriptCore (Apple)}
+\begin{itemize}
+    \item Used by Safari and WebKit-based browsers
+    \item Also known as Nitro
+    \item Written in C++
+    \item Features a four-tier JIT compilation system
+\end{itemize}
+
+\mysubsubsection{Chakra (Microsoft - Legacy)}
+\begin{itemize}
+    \item Used by Internet Explorer and Legacy Microsoft Edge
+    \item Now deprecated in favor of V8 in Chromium-based Edge
+    \item Featured parallel JIT compilation
+\end{itemize}
+
+\mysubsection{Client-side vs Server-side JavaScript}
+
+JavaScript can run in two primary environments, each with distinct capabilities and limitations:
+
+\mysubsubsection{Client-side JavaScript (Browser Environment)}
+
+Client-side JavaScript runs in web browsers and is primarily responsible for creating interactive web pages. It has access to browser-specific APIs but operates in a sandboxed environment for security.
+
+\textbf{Capabilities:}
+\begin{itemize}
+    \item DOM (Document Object Model) manipulation for changing HTML/CSS
+    \item Event handling for user interactions (clicks, keyboard, mouse events)
+    \item Browser APIs (Geolocation, Web Storage, Canvas, WebGL)
+    \item AJAX/Fetch API for asynchronous HTTP requests
+    \item Local Storage and Session Storage for client-side data persistence
+    \item Service Workers for offline functionality and PWAs
+    \item WebSockets for real-time communication
+\end{itemize}
+
+\textbf{Limitations:}
+\begin{itemize}
+    \item No direct file system access (security restriction)
+    \item Cannot directly connect to databases
+    \item Subject to Same-Origin Policy (CORS restrictions)
+    \item Limited access to system resources
+    \item Dependent on browser compatibility
+\end{itemize}
+
+\mysubsubsection{Server-side JavaScript (Node.js Environment)}
+
+Server-side JavaScript runs on servers using Node.js runtime, enabling JavaScript to be used for backend development with full system access.
+
+\textbf{Capabilities:}
+\begin{itemize}
+    \item Full file system access (read, write, delete files)
+    \item Direct database connections (MongoDB, MySQL, PostgreSQL)
+    \item Network programming (create HTTP/HTTPS servers, TCP/UDP sockets)
+    \item Process management and child processes
+    \item Access to npm ecosystem (world's largest package repository)
+    \item System information and OS interaction
+    \item Build tools and task automation
+\end{itemize}
+
+\textbf{Characteristics:}
+\begin{itemize}
+    \item Event-driven, non-blocking I/O model
+    \item Single-threaded with event loop
+    \item High performance through V8 engine
+    \item No DOM or browser-specific APIs
+    \item Can create RESTful APIs and microservices
 \end{itemize}
 
 \mysection{JavaScript Instructions and Statements}
 
-A JavaScript program is a list of programming statements or instructions. Each statement performs a specific action and ends with a semicolon (though semicolons are optional in many cases due to automatic semicolon insertion).
+\mysubsection{Understanding Statements}
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Basic JavaScript Statements}}, label=lst:statements]
-// A simple statement
-console.log("Hello, World!");
+A JavaScript program is a sequence of statements. Each statement is an instruction that tells the JavaScript engine to perform a specific action. Statements are the building blocks of JavaScript programs and are executed sequentially unless control flow statements alter the execution path.
 
-// Multiple statements
-let message = "Learning JavaScript";
-console.log(message);
+\mysubsection{Types of Statements}
 
-// Statements can span multiple lines
-let longMessage = "This is a very long message that " +
-                  "spans multiple lines for readability";
+JavaScript has several categories of statements:
 
-// Compound statement (block)
-{
-    let x = 5;
-    let y = 10;
-    console.log(x + y);
-}
+\mysubsubsection{Expression Statements}
+These evaluate to a value and often have side effects:
 
-// Statement types examples
-let declaration = "This is a declaration statement";
-5 + 3; // Expression statement
-if (true) { /* Control flow statement */ }
-function example() { return; } // Jump statement
+\begin{lstlisting}[style=javascript, caption={\textbf{Expression Statements}}, label=lst:expr-statements]
+// Assignment expression
+x = 5;
+
+// Function call expression
+console.log("Hello");
+
+// Increment/decrement expression
+counter++;
+
+// Method call expression
+array.push(42);
+
+// Complex expression with operators
+result = (a + b) * c / d;
 \end{lstlisting}
 
-\textbf{Statement Types:}
-\begin{itemize}
-    \item \textbf{Expression statements:} Evaluate to a value
-    \item \textbf{Declaration statements:} Declare variables or functions
-    \item \textbf{Control flow statements:} Control program execution
-    \item \textbf{Jump statements:} Transfer control
-\end{itemize}
+\mysubsubsection{Declaration Statements}
+These declare variables, functions, or classes:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Declaration Statements}}, label=lst:decl-statements]
+// Variable declarations
+var oldStyle = "function-scoped";
+let modernVariable = "block-scoped";
+const constant = "immutable binding";
+
+// Function declaration
+function calculateSum(a, b) {
+    return a + b;
+}
+
+// Class declaration (ES6)
+class Rectangle {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+}
+
+// Destructuring declaration
+const [first, second] = [1, 2];
+const {name, age} = person;
+\end{lstlisting}
+
+\mysubsubsection{Control Flow Statements}
+These control the execution flow of the program:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Control Flow Statements}}, label=lst:control-statements]
+// Conditional statements
+if (condition) {
+    // code block
+} else if (otherCondition) {
+    // alternative block
+} else {
+    // default block
+}
+
+// Switch statement
+switch (expression) {
+    case value1:
+        // code
+        break;
+    case value2:
+        // code
+        break;
+    default:
+        // default code
+}
+
+// Loop statements
+for (let i = 0; i < 10; i++) {
+    // loop body
+}
+
+while (condition) {
+    // loop body
+}
+
+do {
+    // loop body
+} while (condition);
+
+// Exception handling
+try {
+    // risky code
+} catch (error) {
+    // error handling
+} finally {
+    // cleanup code
+}
+\end{lstlisting}
+
+\mysubsection{Statement Termination and Semicolons}
+
+JavaScript uses semicolons to mark the end of statements, though they are often optional due to Automatic Semicolon Insertion (ASI):
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Semicolon Usage and ASI}}, label=lst:semicolons]
+// Explicit semicolons (recommended)
+let a = 5;
+let b = 10;
+console.log(a + b);
+
+// ASI will insert semicolons here
+let x = 5
+let y = 10
+console.log(x + y)
+
+// Beware of ASI pitfalls
+// This returns undefined due to ASI
+function wrong() {
+    return
+    {
+        value: 42
+    }
+}
+
+// Correct version
+function correct() {
+    return {
+        value: 42
+    }
+}
+
+// Semicolons required to avoid errors
+let name = "John"
+;[1, 2, 3].forEach(n => console.log(n))
+
+// Or use semicolon at start of line
+let surname = "Doe"
+;(function() {
+    console.log("IIFE")
+})()
+\end{lstlisting}
 
 \mysection{Comments in JavaScript}
 
-Comments are essential for code documentation and are ignored by the JavaScript engine during execution.
+\mysubsection{Purpose of Comments}
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Types of Comments in JavaScript}}, label=lst:comments]
-// Single-line comment
-// This explains what the next line does
-let userName = "John";
+Comments are non-executable text in your code that serve multiple purposes:
+\begin{itemize}
+    \item Document code functionality and purpose
+    \item Explain complex algorithms or business logic
+    \item Leave notes for other developers (or future you)
+    \item Temporarily disable code during debugging
+    \item Provide API documentation and usage examples
+    \item Mark TODOs and areas needing improvement
+\end{itemize}
 
+\mysubsection{Types of Comments}
+
+\mysubsubsection{Single-line Comments}
+
+Single-line comments start with \texttt{//} and continue to the end of the line:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Single-line Comments}}, label=lst:single-comments]
+// This is a single-line comment
+let userName = "Alice"; // This is an inline comment
+
+// Multiple single-line comments
+// can be used to create
+// a comment block
+
+// TODO: Add validation for email format
+// FIXME: Handle edge case when array is empty
+// NOTE: This method is deprecated, use newMethod() instead
+// WARNING: Do not modify this value directly
+// HACK: Temporary workaround for browser bug
+\end{lstlisting}
+
+\mysubsubsection{Multi-line Comments}
+
+Multi-line comments are enclosed between \texttt{/*} and \texttt{*/}:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Multi-line Comments}}, label=lst:multi-comments]
 /* 
-   Multi-line comment
-   This is useful for longer explanations
-   or temporarily disabling code blocks
+   This is a multi-line comment.
+   It can span multiple lines.
+   Useful for longer explanations.
 */
 
-let age = 25; // Inline comment
+/* Can also be used inline */ let value = 42;
 
-/** 
- * JSDoc comment for documentation
- * @param {string} name - The user's name
- * @param {number} age - The user's age
- * @returns {string} A greeting message
+/*
+ * Starred multi-line comment
+ * Often used for formal documentation
+ * Each line starts with an asterisk for readability
  */
-function createGreeting(name, age) {
-    return `Hello ${name}, you are ${age} years old`;
+
+/* Temporarily disable code block
+function oldImplementation() {
+    // Old code here
+}
+*/
+\end{lstlisting}
+
+\mysubsubsection{JSDoc Comments}
+
+JSDoc comments are special multi-line comments used for documentation generation:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{JSDoc Documentation Comments}}, label=lst:jsdoc-comments]
+/**
+ * Calculates the area of a rectangle.
+ * @param {number} width - The width of the rectangle
+ * @param {number} height - The height of the rectangle
+ * @returns {number} The area of the rectangle
+ * @throws {Error} If width or height is negative
+ * @example
+ * // Calculate area of a 5x10 rectangle
+ * const area = calculateArea(5, 10);
+ * console.log(area); // 50
+ */
+function calculateArea(width, height) {
+    if (width < 0 || height < 0) {
+        throw new Error("Dimensions must be positive");
+    }
+    return width * height;
 }
 
-// TODO: Add validation
-// FIXME: Handle edge cases
-// NOTE: This is deprecated
+/**
+ * Represents a user in the system.
+ * @class
+ * @property {string} name - User's full name
+ * @property {string} email - User's email address
+ * @property {Date} createdAt - Account creation date
+ */
+class User {
+    /**
+     * Creates a new User instance.
+     * @constructor
+     * @param {string} name - User's name
+     * @param {string} email - User's email
+     */
+    constructor(name, email) {
+        this.name = name;
+        this.email = email;
+        this.createdAt = new Date();
+    }
+    
+    /**
+     * Gets the user's display name.
+     * @returns {string} The formatted display name
+     * @memberof User
+     */
+    getDisplayName() {
+        return `${this.name} <${this.email}>`;
+    }
+}
+
+/**
+ * @typedef {Object} Point
+ * @property {number} x - X coordinate
+ * @property {number} y - Y coordinate
+ */
+
+/**
+ * @enum {string}
+ */
+const Status = {
+    PENDING: 'pending',
+    ACTIVE: 'active',
+    INACTIVE: 'inactive'
+};
 \end{lstlisting}
 
 \mysection{Variables in JavaScript}
 
-Variables are containers for storing data values. JavaScript has evolved from using only \texttt{var} to modern \texttt{let} and \texttt{const} declarations.
+\mysubsection{Understanding Variables}
 
-\subsubsection{Variable Declaration Keywords}
+Variables are named containers that store data values. They are fundamental to programming as they allow us to store, retrieve, and manipulate data throughout our programs. In JavaScript, variables can hold any type of data and can change types during execution (dynamic typing).
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Variable Declaration Methods - var, let, const}}, label=lst:variables]
-// var - Function-scoped (ES5 and earlier)
-var oldVariable = "I'm function-scoped";
-var canBeRedeclared = "first";
-var canBeRedeclared = "second"; // Allowed
+\mysubsection{Variable Declaration Keywords}
 
-// let - Block-scoped (ES6+)
-let modernVariable = "I'm block-scoped";
-let cannotBeRedeclared = "only once";
-// let cannotBeRedeclared = "error"; // SyntaxError
+JavaScript provides three keywords for declaring variables, each with different scoping rules and behaviors:
 
-// const - Block-scoped, cannot be reassigned (ES6+)
-const constantVariable = "I cannot be reassigned";
-// constantVariable = "new value"; // TypeError
+\mysubsubsection{var - Function-scoped Variables}
 
-// const with objects and arrays
-const person = { name: "John" };
-person.name = "Jane"; // Allowed - modifying property
-// person = { name: "Bob" }; // Error - reassigning
+The \texttt{var} keyword is the original way to declare variables in JavaScript (ES5 and earlier):
 
-const numbers = [1, 2, 3];
-numbers.push(4); // Allowed - modifying array
-// numbers = [5, 6, 7]; // Error - reassigning
+\begin{lstlisting}[style=javascript, caption={\textbf{var Declaration Characteristics}}, label=lst:var-details]
+// Basic var declaration
+var message = "Hello";
+var count = 0;
+var isActive = true;
+
+// var allows redeclaration
+var user = "Alice";
+var user = "Bob"; // No error, overwrites previous
+
+// var is function-scoped, not block-scoped
+function demonstrateVar() {
+    if (true) {
+        var innerVar = "I'm function-scoped";
+    }
+    console.log(innerVar); // Works! var ignores block scope
+}
+
+// var declarations are hoisted
+console.log(hoistedVar); // undefined (not ReferenceError)
+var hoistedVar = "I'm hoisted";
+
+// var in loops
+for (var i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log(i); // Prints 3, 3, 3 (not 0, 1, 2)
+    }, 100);
+}
+
+// Global object property
+var globalVar = "I'm global";
+console.log(window.globalVar); // "I'm global" (in browser)
 \end{lstlisting}
 
-\subsubsection{Variable Scope}
+\mysubsubsection{let - Block-scoped Variables}
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Understanding Variable Scope}}, label=lst:scope]
-// Global scope
-var globalVar = "I'm global";
-let globalLet = "I'm also global";
+The \texttt{let} keyword was introduced in ES6 for block-scoped variable declaration:
 
-function demonstrateScope() {
-    // Function scope
-    var functionScoped = "Available throughout function";
+\begin{lstlisting}[style=javascript, caption={\textbf{let Declaration Characteristics}}, label=lst:let-details]
+// Basic let declaration
+let name = "John";
+let age = 30;
+let isStudent = false;
+
+// let prevents redeclaration in same scope
+let color = "blue";
+// let color = "red"; // SyntaxError: already declared
+
+// let is block-scoped
+if (true) {
+    let blockScoped = "Only in this block";
+    console.log(blockScoped); // Works
+}
+// console.log(blockScoped); // ReferenceError
+
+// let in loops (captures value correctly)
+for (let i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log(i); // Prints 0, 1, 2 correctly
+    }, 100);
+}
+
+// Temporal Dead Zone (TDZ)
+// console.log(tdzVariable); // ReferenceError
+let tdzVariable = "Now accessible";
+
+// let can be reassigned
+let mutable = 10;
+mutable = 20; // Allowed
+mutable++; // Allowed
+
+// Shadow variable in nested scope
+let outer = "outer";
+{
+    let outer = "inner"; // Different variable
+    console.log(outer); // "inner"
+}
+console.log(outer); // "outer"
+\end{lstlisting}
+
+\mysubsubsection{const - Block-scoped Constants}
+
+The \texttt{const} keyword declares block-scoped constants with immutable bindings:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{const Declaration Characteristics}}, label=lst:const-details]
+// Basic const declaration (must be initialized)
+const PI = 3.14159;
+const MAX_SIZE = 100;
+const IS_PRODUCTION = true;
+
+// const cannot be reassigned
+const fixed = 42;
+// fixed = 43; // TypeError: Assignment to constant
+
+// const with objects (mutable contents)
+const person = {
+    name: "Alice",
+    age: 25
+};
+person.age = 26; // Allowed - modifying property
+person.email = "alice@example.com"; // Allowed - adding property
+delete person.age; // Allowed - deleting property
+// person = {}; // TypeError - cannot reassign
+
+// const with arrays (mutable contents)
+const numbers = [1, 2, 3];
+numbers.push(4); // Allowed
+numbers[0] = 10; // Allowed
+numbers.pop(); // Allowed
+// numbers = []; // TypeError - cannot reassign
+
+// Object.freeze for true immutability
+const frozen = Object.freeze({
+    name: "Immutable",
+    nested: { value: 42 }
+});
+// frozen.name = "Changed"; // Silently fails (error in strict mode)
+frozen.nested.value = 100; // Still works! (shallow freeze)
+
+// Deep freeze implementation
+function deepFreeze(obj) {
+    Object.freeze(obj);
+    Object.values(obj).forEach(value => {
+        if (typeof value === 'object' && value !== null) {
+            deepFreeze(value);
+        }
+    });
+    return obj;
+}
+
+const trulyImmutable = deepFreeze({
+    level1: {
+        level2: {
+            value: "Cannot change"
+        }
+    }
+});
+\end{lstlisting}
+
+\mysubsection{Variable Scope}
+
+Scope determines where variables can be accessed in your code:
+
+\mysubsubsection{Global Scope}
+
+Variables declared outside any function or block have global scope:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Global Scope}}, label=lst:global-scope]
+// Global variables
+var globalVar = "I'm global with var";
+let globalLet = "I'm global with let";
+const globalConst = "I'm global with const";
+
+// Implicit global (avoid this!)
+function createGlobal() {
+    implicitGlobal = "I'm accidentally global"; // No declaration keyword
+}
+createGlobal();
+console.log(implicitGlobal); // Works but bad practice
+
+// Global object access
+console.log(window.globalVar); // Works (browser)
+console.log(window.globalLet); // undefined (let doesn't create property)
+console.log(global.globalVar); // Works (Node.js)
+\end{lstlisting}
+
+\mysubsubsection{Function Scope}
+
+Variables declared inside a function are only accessible within that function:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Function Scope}}, label=lst:function-scope]
+function demonstrateFunctionScope() {
+    var functionVar = "Only in function";
+    let functionLet = "Also only in function";
+    const functionConst = "Same here";
     
-    if (true) {
-        // Block scope
-        var varInBlock = "Still function-scoped";
-        let letInBlock = "Only in this block";
-        const constInBlock = "Also only in this block";
+    function innerFunction() {
+        // Can access parent function's variables
+        console.log(functionVar); // Works
+        console.log(functionLet); // Works
+        console.log(functionConst); // Works
         
-        console.log(functionScoped); // Works
-        console.log(varInBlock);     // Works
-        console.log(letInBlock);     // Works
+        var innerVar = "Only in inner function";
     }
     
-    console.log(functionScoped); // Works
-    console.log(varInBlock);     // Works (var ignores block)
-    // console.log(letInBlock);  // ReferenceError
-    // console.log(constInBlock); // ReferenceError
+    innerFunction();
+    // console.log(innerVar); // ReferenceError
+}
+
+demonstrateFunctionScope();
+// console.log(functionVar); // ReferenceError
+\end{lstlisting}
+
+\mysubsubsection{Block Scope}
+
+Variables declared with \texttt{let} and \texttt{const} inside a block are only accessible within that block:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Block Scope}}, label=lst:block-scope]
+// Block scope with different keywords
+{
+    var blockVar = "I escape the block";
+    let blockLet = "I'm trapped in block";
+    const blockConst = "Me too";
+}
+
+console.log(blockVar); // Works (var ignores block)
+// console.log(blockLet); // ReferenceError
+// console.log(blockConst); // ReferenceError
+
+// Conditional blocks
+if (true) {
+    let ifScoped = "Only in if block";
+    const alsoIfScoped = "Same";
+}
+
+// Loop blocks
+for (let i = 0; i < 3; i++) {
+    let loopScoped = i * 2;
+    const alsoLoopScoped = i * 3;
+}
+// console.log(i); // ReferenceError
+// console.log(loopScoped); // ReferenceError
+
+// Switch statement blocks
+switch (true) {
+    case true: {
+        let caseScoped = "Only in this case";
+        break;
+    }
 }
 \end{lstlisting}
 
-\subsubsection{Hoisting}
+\mysubsection{Hoisting}
 
-Hoisting is JavaScript's default behavior of moving declarations to the top of their scope before code execution.
+Hoisting is JavaScript's behavior of moving declarations to the top of their scope during compilation:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Understanding Hoisting with var, let, and const}}, label=lst:hoisting]
-// Hoisting with var
-console.log(hoistedVar); // undefined (not error)
-var hoistedVar = "I'm hoisted";
-console.log(hoistedVar); // "I'm hoisted"
+\begin{lstlisting}[style=javascript, caption={\textbf{Complete Hoisting Examples}}, label=lst:hoisting-complete]
+// var hoisting
+console.log(varVariable); // undefined (declared but not initialized)
+var varVariable = "Now initialized";
+console.log(varVariable); // "Now initialized"
 
-// The above is interpreted as:
-// var hoistedVar; // Declaration hoisted
-// console.log(hoistedVar); // undefined
-// hoistedVar = "I'm hoisted"; // Assignment stays
+// let/const hoisting (Temporal Dead Zone)
+// console.log(letVariable); // ReferenceError: Cannot access before initialization
+// console.log(constVariable); // ReferenceError: Cannot access before initialization
+let letVariable = "Let value";
+const constVariable = "Const value";
 
-// Hoisting with let/const (Temporal Dead Zone)
-// console.log(notAccessible); // ReferenceError
-let notAccessible = "I'm in the TDZ";
-
-// Function hoisting
-console.log(myFunction()); // "Works!"
-function myFunction() {
-    return "Works!";
+// Function declaration hoisting
+console.log(add(2, 3)); // 5 (fully hoisted)
+function add(a, b) {
+    return a + b;
 }
 
-// Function expressions are not hoisted
-// console.log(myExpression()); // TypeError
-var myExpression = function() {
-    return "Not hoisted";
+// Function expression hoisting
+// console.log(subtract(5, 2)); // TypeError: subtract is not a function
+var subtract = function(a, b) {
+    return a - b;
 };
 
-// Temporal Dead Zone (TDZ) demonstration
-function demonstrateTDZ() {
-    // TDZ starts for 'temp'
-    // console.log(temp); // ReferenceError
-    let temp = "Now accessible"; // TDZ ends
-    console.log(temp); // "Now accessible"
+// Arrow function hoisting
+// console.log(multiply(3, 4)); // TypeError: Cannot access before initialization
+const multiply = (a, b) => a * b;
+
+// Class hoisting
+// const instance = new MyClass(); // ReferenceError: Cannot access before initialization
+class MyClass {
+    constructor() {
+        this.value = 42;
+    }
+}
+
+// Hoisting in practice
+function demonstrateHoisting() {
+    console.log(x); // undefined
+    console.log(y); // ReferenceError
+    console.log(z); // ReferenceError
+    
+    var x = 1;
+    let y = 2;
+    const z = 3;
+    
+    // Conceptually interpreted as:
+    // var x; // Declaration hoisted
+    // console.log(x); // undefined
+    // console.log(y); // TDZ - error
+    // console.log(z); // TDZ - error
+    // x = 1; // Assignment stays
+    // let y = 2; // Declaration and assignment
+    // const z = 3; // Declaration and assignment
 }
 \end{lstlisting}
 
 \mysection{Data Types in JavaScript}
 
-JavaScript is dynamically typed with seven primitive types and one non-primitive type (Object).
+\mysubsection{Type System Overview}
 
-\subsubsection{Primitive Data Types}
+JavaScript uses dynamic typing, meaning variables don't have fixed types and can hold values of any type. The type is associated with the value, not the variable. JavaScript has seven primitive types and one complex type (Object).
 
-\begin{lstlisting}[style=javascript, caption={\textbf{All Primitive Data Types}}, label=lst:datatypes]
-// 1. Number - Integers and floating-point
-let integer = 42;
+\mysubsection{Primitive Data Types}
+
+Primitive types are immutable and stored directly in the variable:
+
+\mysubsubsection{Number Type}
+
+The Number type represents both integers and floating-point numbers:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Number Type - Complete Examples}}, label=lst:number-type]
+// Integer literals
+let decimal = 42;
+let negative = -100;
+let zero = 0;
+
+// Floating-point literals
 let float = 3.14159;
-let exponential = 2.5e3;  // 2500
-let hexadecimal = 0xFF;   // 255
-let binary = 0b1010;      // 10
-let octal = 0o12;         // 10
+let scientific = 2.5e3; // 2500
+let smallScientific = 2.5e-3; // 0.0025
+
+// Binary, octal, and hexadecimal
+let binary = 0b1010; // 10 in decimal
+let octal = 0o12; // 10 in decimal
+let hex = 0xFF; // 255 in decimal
 
 // Special numeric values
 let infinity = Infinity;
+let negInfinity = -Infinity;
 let notANumber = NaN;
 
-// 2. String - Text data
-let singleQuote = 'Hello';
-let doubleQuote = "World";
-let templateLiteral = `Hello ${doubleQuote}`;
+// Number properties
+console.log(Number.MAX_VALUE); // 1.7976931348623157e+308
+console.log(Number.MIN_VALUE); // 5e-324
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+console.log(Number.MIN_SAFE_INTEGER); // -9007199254740991
+console.log(Number.EPSILON); // 2.220446049250313e-16
 
-// 3. Boolean
+// Number methods
+console.log(Number.isInteger(42)); // true
+console.log(Number.isInteger(42.0)); // true
+console.log(Number.isInteger(42.1)); // false
+console.log(Number.isFinite(100)); // true
+console.log(Number.isFinite(Infinity)); // false
+console.log(Number.isNaN(NaN)); // true
+console.log(Number.isNaN("NaN")); // false (strict check)
+console.log(Number.isSafeInteger(9007199254740991)); // true
+console.log(Number.isSafeInteger(9007199254740992)); // false
+
+// Parsing numbers
+console.log(Number.parseInt("42")); // 42
+console.log(Number.parseInt("42.5")); // 42
+console.log(Number.parseInt("101", 2)); // 5 (binary)
+console.log(Number.parseFloat("3.14")); // 3.14
+console.log(Number.parseFloat("3.14some")); // 3.14
+
+// Number instance methods
+let num = 123.456;
+console.log(num.toFixed(2)); // "123.46"
+console.log(num.toPrecision(5)); // "123.46"
+console.log(num.toExponential(2)); // "1.23e+2"
+console.log(num.toString()); // "123.456"
+console.log(num.toString(2)); // Binary representation
+
+// Arithmetic operations
+console.log(10 + 5); // 15
+console.log(10 - 5); // 5
+console.log(10 * 5); // 50
+console.log(10 / 5); // 2
+console.log(10 % 3); // 1 (remainder)
+console.log(2 ** 3); // 8 (exponentiation)
+
+// Increment and decrement
+let counter = 0;
+console.log(counter++); // 0 (post-increment)
+console.log(++counter); // 2 (pre-increment)
+console.log(counter--); // 2 (post-decrement)
+console.log(--counter); // 0 (pre-decrement)
+
+// Math object methods
+console.log(Math.round(4.7)); // 5
+console.log(Math.ceil(4.1)); // 5
+console.log(Math.floor(4.9)); // 4
+console.log(Math.trunc(4.9)); // 4
+console.log(Math.abs(-5)); // 5
+console.log(Math.pow(2, 3)); // 8
+console.log(Math.sqrt(16)); // 4
+console.log(Math.max(1, 5, 3)); // 5
+console.log(Math.min(1, 5, 3)); // 1
+console.log(Math.random()); // Random 0-1
+console.log(Math.PI); // 3.141592653589793
+console.log(Math.E); // 2.718281828459045
+\end{lstlisting}
+
+\mysubsubsection{String Type}
+
+Strings represent textual data as a sequence of characters:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{String Type - Complete Examples}}, label=lst:string-type]
+// String creation
+let single = 'Single quotes';
+let double = "Double quotes";
+let template = `Template literal`;
+
+// Escape sequences
+let escaped = "She said \"Hello\"";
+let newline = "First line\nSecond line";
+let tab = "Column1\tColumn2";
+let backslash = "Path\\to\\file";
+let unicode = "\u0048\u0065\u006C\u006C\u006F"; // "Hello"
+
+// Template literals (ES6)
+let name = "Alice";
+let age = 30;
+let multiline = `
+    This is a multiline
+    string using template literals
+`;
+let interpolated = `Hello, ${name}! You are ${age} years old.`;
+let expression = `2 + 2 = ${2 + 2}`;
+
+// String properties and methods
+let text = "JavaScript Programming";
+
+// Length property
+console.log(text.length); // 22
+
+// Character access
+console.log(text[0]); // "J"
+console.log(text.charAt(4)); // "S"
+console.log(text.charCodeAt(0)); // 74 (Unicode)
+
+// Case conversion
+console.log(text.toUpperCase()); // "JAVASCRIPT PROGRAMMING"
+console.log(text.toLowerCase()); // "javascript programming"
+
+// Searching
+console.log(text.indexOf("Script")); // 4
+console.log(text.lastIndexOf("a")); // 10
+console.log(text.includes("Java")); // true
+console.log(text.startsWith("Java")); // true
+console.log(text.endsWith("ing")); // true
+console.log(text.search(/script/i)); // 4 (regex)
+
+// Extraction
+console.log(text.substring(0, 10)); // "JavaScript"
+console.log(text.substr(4, 6)); // "Script" (deprecated)
+console.log(text.slice(0, 10)); // "JavaScript"
+console.log(text.slice(-11)); // "Programming"
+
+// Modification (returns new string)
+console.log(text.replace("JavaScript", "TypeScript"));
+console.log(text.replaceAll("a", "A")); // ES2021
+console.log("  trim me  ".trim()); // "trim me"
+console.log("  trim me  ".trimStart()); // "trim me  "
+console.log("  trim me  ".trimEnd()); // "  trim me"
+console.log("pad".padStart(6, "0")); // "000pad"
+console.log("pad".padEnd(6, "!")); // "pad!!!"
+
+// Splitting and joining
+console.log("a,b,c".split(",")); // ["a", "b", "c"]
+console.log("hello".split("")); // ["h","e","l","l","o"]
+console.log(["a", "b", "c"].join("-")); // "a-b-c"
+
+// Repeat and concatenation
+console.log("Ha".repeat(3)); // "HaHaHa"
+console.log("Hello".concat(" ", "World")); // "Hello World"
+
+// String comparison
+console.log("a" < "b"); // true (lexicographic)
+console.log("2" < "10"); // false (string comparison)
+console.log("apple".localeCompare("banana")); // -1
+
+// Regular expression methods
+let pattern = /[0-9]+/g;
+console.log("abc123def456".match(pattern)); // ["123", "456"]
+console.log("test@email.com".match(/@/)); // ["@"]
+\end{lstlisting}
+
+\mysubsubsection{Boolean Type}
+
+Boolean represents logical values true or false:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Boolean Type and Truthy/Falsy Values}}, label=lst:boolean-type]
+// Boolean literals
 let isTrue = true;
 let isFalse = false;
 
-// 4. Undefined
+// Boolean constructor
+console.log(Boolean(1)); // true
+console.log(Boolean(0)); // false
+console.log(Boolean("text")); // true
+console.log(Boolean("")); // false
+
+// Falsy values (convert to false)
+console.log(Boolean(false)); // false
+console.log(Boolean(0)); // false
+console.log(Boolean(-0)); // false
+console.log(Boolean(0n)); // false (BigInt zero)
+console.log(Boolean("")); // false
+console.log(Boolean(null)); // false
+console.log(Boolean(undefined)); // false
+console.log(Boolean(NaN)); // false
+
+// Truthy values (everything else)
+console.log(Boolean(true)); // true
+console.log(Boolean(1)); // true
+console.log(Boolean("0")); // true (non-empty string)
+console.log(Boolean("false")); // true (non-empty string)
+console.log(Boolean([])); // true (empty array)
+console.log(Boolean({})); // true (empty object)
+console.log(Boolean(function(){})); // true
+
+// Logical operators
+console.log(true && true); // true
+console.log(true && false); // false
+console.log(true || false); // true
+console.log(false || false); // false
+console.log(!true); // false
+console.log(!false); // true
+
+// Short-circuit evaluation
+let a = true && "value"; // "value"
+let b = false && "value"; // false
+let c = true || "default"; // true
+let d = false || "default"; // "default"
+
+// Practical usage
+function checkValue(value) {
+    if (value) {
+        console.log("Truthy value");
+    } else {
+        console.log("Falsy value");
+    }
+}
+
+// Double negation for boolean conversion
+let boolValue = !!"text"; // true
+let boolValue2 = !!0; // false
+\end{lstlisting}
+
+\mysubsubsection{Undefined and Null Types}
+
+Undefined and null represent absence of value:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Undefined and Null Types}}, label=lst:undefined-null]
+// Undefined - variable declared but not assigned
 let undefinedVar;
 console.log(undefinedVar); // undefined
+console.log(typeof undefinedVar); // "undefined"
 
-// 5. Null
+// Undefined scenarios
+function noReturn() {
+    // No return statement
+}
+console.log(noReturn()); // undefined
+
+function missingParam(param) {
+    console.log(param); // undefined if not passed
+}
+missingParam();
+
+let obj = {};
+console.log(obj.nonExistent); // undefined
+
+let arr = [1, 2, 3];
+console.log(arr[10]); // undefined
+
+// Null - intentional absence of value
 let nullVar = null;
+console.log(nullVar); // null
+console.log(typeof nullVar); // "object" (historical bug)
 
-// 6. Symbol (ES6)
-let sym1 = Symbol('id');
-let sym2 = Symbol('id');
-console.log(sym1 === sym2); // false
+// Null vs Undefined
+console.log(null == undefined); // true (loose equality)
+console.log(null === undefined); // false (strict equality)
 
-// 7. BigInt (ES2020)
-let bigInteger = 123n;
-let bigFromString = BigInt("9007199254740992");
-\end{lstlisting}
-
-\subsubsection{Type Conversion and Coercion}
-
-\begin{lstlisting}[style=javascript, caption={\textbf{Type Conversion and Coercion}}, label=lst:typeconversion]
-// Explicit Conversion
-let num = 123;
-let str = String(num);        // "123"
-let strToNum = Number("456"); // 456
-let bool = Boolean(1);        // true
-
-// Implicit Coercion
-console.log("5" + 3);    // "53" (string)
-console.log("5" - 3);    // 2 (number)
-console.log(true + 1);   // 2
-
-// Falsy values
-// false, 0, -0, 0n, "", null, undefined, NaN
-
-// Equality comparisons
-console.log(5 == "5");   // true (coercion)
-console.log(5 === "5");  // false (strict)
-\end{lstlisting}
-
-\mysection{Arrays in JavaScript}
-
-Arrays are ordered collections that can hold multiple values of any type.
-
-\subsubsection{Array Creation and Methods}
-
-\begin{lstlisting}[style=javascript, caption={\textbf{Arrays - Creation and Methods}}, label=lst:arrays]
-// Creating arrays
-let numbers = [1, 2, 3, 4, 5];
-let mixed = [1, "two", true, null];
-
-// Accessing elements
-console.log(numbers[0]);    // 1
-console.log(numbers.length); // 5
-
-// Mutating methods
-numbers.push(6);        // Add to end
-numbers.pop();          // Remove from end
-numbers.unshift(0);     // Add to start
-numbers.shift();        // Remove from start
-numbers.splice(2, 1);   // Remove at index
-numbers.sort();         // Sort in place
-numbers.reverse();      // Reverse in place
-
-// Non-mutating methods
-let subset = numbers.slice(1, 3);
-let joined = numbers.join("-");
-let index = numbers.indexOf(3);
-
-// Iteration methods (ES5+)
-let doubled = numbers.map(n => n * 2);
-let evens = numbers.filter(n => n % 2 === 0);
-let sum = numbers.reduce((acc, n) => acc + n, 0);
-let found = numbers.find(n => n > 3);
-
-numbers.forEach((num, index) => {
-    console.log(`Index ${index}: ${num}`);
-});
-\end{lstlisting}
-
-\mysection{Strings in JavaScript}
-
-Strings represent text data and are immutable.
-
-\begin{lstlisting}[style=javascript, caption={\textbf{String Creation and Methods}}, label=lst:strings]
-// Creating strings
-let single = 'Single quotes';
-let double = "Double quotes";
-let template = `Template literal with ${double}`;
-
-// String methods
-let text = "  JavaScript  ";
-console.log(text.length);           // 14
-console.log(text.trim());           // "JavaScript"
-console.log(text.toUpperCase());    // "  JAVASCRIPT  "
-console.log(text.toLowerCase());    // "  javascript  "
-
-// Searching
-let sentence = "The quick brown fox";
-console.log(sentence.indexOf("quick"));    // 4
-console.log(sentence.includes("fox"));     // true
-console.log(sentence.startsWith("The"));   // true
-
-// Extracting
-console.log(sentence.substring(4, 9));  // "quick"
-console.log(sentence.slice(-3));        // "fox"
-
-// Modifying (returns new string)
-console.log(sentence.replace("fox", "dog"));
-console.log(sentence.split(" ")); // Array of words
-\end{lstlisting}
-
-\mysection{Functions in JavaScript}
-
-Functions are reusable blocks of code that perform specific tasks.
-
-\begin{lstlisting}[style=javascript, caption={\textbf{Function Types and Features}}, label=lst:functions]
-// Function Declaration (hoisted)
-function greet(name) {
-    return "Hello, " + name;
+// Checking for null or undefined
+function checkNullOrUndefined(value) {
+    if (value == null) {
+        // Catches both null and undefined
+        console.log("Value is null or undefined");
+    }
+    
+    if (value === null) {
+        console.log("Value is strictly null");
+    }
+    
+    if (value === undefined) {
+        console.log("Value is strictly undefined");
+    }
+    
+    if (typeof value === "undefined") {
+        console.log("Value is undefined (safe check)");
+    }
 }
 
-// Function Expression
-const multiply = function(a, b) {
-    return a * b;
+// Nullish coalescing operator (ES2020)
+let value1 = null ?? "default"; // "default"
+let value2 = undefined ?? "default"; // "default"
+let value3 = 0 ?? "default"; // 0 (not nullish)
+let value4 = "" ?? "default"; // "" (not nullish)
+
+// Optional chaining with null/undefined
+let user = null;
+console.log(user?.name); // undefined (no error)
+\end{lstlisting}
+
+\mysubsubsection{Symbol Type}
+
+Symbols are unique identifiers introduced in ES6:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Symbol Type}}, label=lst:symbol-type]
+// Creating symbols
+let sym1 = Symbol();
+let sym2 = Symbol("description");
+let sym3 = Symbol("description");
+
+// Symbols are always unique
+console.log(sym2 === sym3); // false
+
+// Symbol properties
+console.log(sym2.toString()); // "Symbol(description)"
+console.log(sym2.description); // "description" (ES2019)
+
+// Symbols as object keys
+let id = Symbol("id");
+let user = {
+    name: "Alice",
+    [id]: 12345
 };
 
-// Arrow Function (ES6)
-const square = x => x * x;
-const sum = (a, b) => a + b;
+console.log(user[id]); // 12345
+console.log(user.id); // undefined (different from symbol)
 
-// Default parameters (ES6)
-function greetWithDefault(name = "World") {
-    return `Hello, ${name}!`;
+// Symbols are not enumerable
+console.log(Object.keys(user)); // ["name"]
+console.log(Object.getOwnPropertySymbols(user)); // [Symbol(id)]
+
+// Well-known symbols
+let iterable = {
+    [Symbol.iterator]: function*() {
+        yield 1;
+        yield 2;
+        yield 3;
+    }
+};
+
+for (let value of iterable) {
+    console.log(value); // 1, 2, 3
 }
 
-// Rest parameters (ES6)
-function sumAll(...numbers) {
-    return numbers.reduce((acc, n) => acc + n, 0);
-}
+// Global symbol registry
+let globalSym1 = Symbol.for("app.id");
+let globalSym2 = Symbol.for("app.id");
+console.log(globalSym1 === globalSym2); // true
 
-// Destructuring parameters
-function createUser({name, age, email = "N/A"}) {
-    return { name, age, email, id: Date.now() };
-}
-
-// Closures
-function createCounter(start = 0) {
-    let count = start;
-    return {
-        increment: () => ++count,
-        decrement: () => --count,
-        getValue: () => count
-    };
-}
-
-// Higher-order function
-function withLogging(fn) {
-    return function(...args) {
-        console.log(`Calling with: ${args}`);
-        return fn(...args);
-    };
-}
-
-// IIFE (Immediately Invoked Function Expression)
-(function() {
-    console.log("IIFE executed!");
-})();
+console.log(Symbol.keyFor(globalSym1)); // "app.id"
 \end{lstlisting}
 
-\mysection{Objects and Methods}
+\mysubsubsection{BigInt Type}
 
-Objects are collections of key-value pairs.
+BigInt represents arbitrarily large integers (ES2020):
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Objects - Creation and Manipulation}}, label=lst:objects]
-// Object literal
-const person = {
+\begin{lstlisting}[style=javascript, caption={\textbf{BigInt Type}}, label=lst:bigint-type]
+// Creating BigInts
+let bigInt1 = 123n;
+let bigInt2 = BigInt(456);
+let bigInt3 = BigInt("789012345678901234567890");
+
+// BigInt operations
+console.log(10n + 20n); // 30n
+console.log(100n - 50n); // 50n
+console.log(3n * 4n); // 12n
+console.log(10n / 3n); // 3n (integer division)
+console.log(10n % 3n); // 1n
+console.log(2n ** 10n); // 1024n
+
+// BigInt limitations
+// console.log(10n + 5); // TypeError: Cannot mix BigInt and other types
+console.log(10n + BigInt(5)); // 15n
+
+// Comparison
+console.log(10n > 5n); // true
+console.log(10n == 10); // true (loose equality)
+console.log(10n === 10); // false (strict equality)
+
+// BigInt methods
+console.log(BigInt.asIntN(3, 5n)); // 5n
+console.log(BigInt.asUintN(3, 5n)); // 5n
+
+// Use cases for BigInt
+let maxSafeInt = Number.MAX_SAFE_INTEGER;
+console.log(maxSafeInt); // 9007199254740991
+console.log(maxSafeInt + 1); // 9007199254740992
+console.log(maxSafeInt + 2); // 9007199254740992 (precision lost)
+
+let bigSafeInt = BigInt(maxSafeInt);
+console.log(bigSafeInt + 1n); // 9007199254740992n
+console.log(bigSafeInt + 2n); // 9007199254740993n (correct)
+\end{lstlisting}
+
+\mysubsection{Non-Primitive Type: Object}
+
+Objects are complex data types that can contain multiple values:
+
+\begin{lstlisting}[style=javascript, caption={\textbf{Object Type - Complete Reference}}, label=lst:object-complete]
+// Object literal creation
+let person = {
     firstName: "John",
     lastName: "Doe",
     age: 30,
+    isEmployed: true,
+    address: {
+        street: "123 Main St",
+        city: "New York",
+        zip: "10001"
+    },
+    hobbies: ["reading", "gaming", "hiking"],
     
     // Method
-    getFullName() {
+    getFullName: function() {
+        return this.firstName + " " + this.lastName;
+    },
+    
+    // Shorthand method (ES6)
+    greet() {
+        return `Hello, I'm ${this.firstName}`;
+    },
+    
+    // Getter
+    get fullName() {
         return `${this.firstName} ${this.lastName}`;
+    },
+    
+    // Setter
+    set fullName(name) {
+        [this.firstName, this.lastName] = name.split(" ");
     }
 };
 
 // Accessing properties
-console.log(person.firstName);      // Dot notation
-console.log(person["lastName"]);    // Bracket notation
-console.log(person.getFullName());  // Method call
+console.log(person.firstName); // Dot notation
+console.log(person["lastName"]); // Bracket notation
+let prop = "age";
+console.log(person[prop]); // Dynamic property access
 
-// Adding/modifying properties
+// Nested access
+console.log(person.address.city);
+console.log(person["address"]["zip"]);
+
+// Adding properties
 person.email = "john@example.com";
-person.age = 31;
+person["phone"] = "555-1234";
 
 // Deleting properties
-delete person.email;
+delete person.phone;
+
+// Property existence check
+console.log("email" in person); // true
+console.log(person.hasOwnProperty("email")); // true
 
 // Object methods
-console.log(Object.keys(person));   // Array of keys
+console.log(Object.keys(person)); // Array of keys
 console.log(Object.values(person)); // Array of values
 console.log(Object.entries(person)); // Array of [key, value]
 
+// Object.assign (shallow copy)
+let copied = Object.assign({}, person);
+let merged = Object.assign({}, person, {age: 31, city: "Boston"});
+
+// Spread operator (ES6)
+let spread = {...person};
+let extended = {...person, salary: 50000};
+
 // Object destructuring
-const { firstName, age } = person;
+let {firstName, age} = person;
+let {address: {city}} = person; // Nested destructuring
 
-// Spread operator
-const copied = { ...person };
-const merged = { ...person, city: "NYC" };
-
+// Object creation patterns
 // Constructor function
-function Car(make, model, year) {
+function Car(make, model) {
     this.make = make;
     this.model = model;
-    this.year = year;
+}
+let myCar = new Car("Toyota", "Camry");
+
+// Object.create
+let prototype = {
+    greet() {
+        return `Hello, ${this.name}`;
+    }
+};
+let obj = Object.create(prototype);
+obj.name = "Alice";
+
+// Factory function
+function createUser(name, age) {
+    return {
+        name,
+        age,
+        isAdult() {
+            return this.age >= 18;
+        }
+    };
 }
 
-const myCar = new Car("Toyota", "Camry", 2022);
-
-// ES6 Class
+// ES6 Classes
 class Animal {
-    constructor(name) {
+    constructor(name, species) {
         this.name = name;
+        this.species = species;
     }
     
     speak() {
         return `${this.name} makes a sound`;
     }
+    
+    static getKingdom() {
+        return "Animalia";
+    }
 }
 
-const dog = new Animal("Buddy");
+let dog = new Animal("Buddy", "dog");
 \end{lstlisting}
 
-\mysection{Decisions and Loops}
+\mysection{Type Conversion and Coercion}
 
-Control flow statements control the execution path of your program.
+\mysubsection{Explicit Type Conversion}
 
-\subsubsection{Conditional Statements}
+Explicit conversion (type casting) is when you manually convert from one type to another:
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Decision Making Structures}}, label=lst:decisions]
-// if...else
-let age = 18;
-if (age < 18) {
-    console.log("Minor");
-} else if (age < 65) {
-    console.log("Adult");
-} else {
-    console.log("Senior");
-}
+\begin{lstlisting}[style=javascript, caption={\textbf{Explicit Type Conversion Methods}}, label=lst:explicit-conversion]
+// Converting to String
+String(123); // "123"
+String(true); // "true"
+String(null); // "null"
+String(undefined); // "undefined"
+String([1, 2, 3]); // "1,2,3"
+String({a: 1}); // "[object Object]"
 
-// switch
-let day = 1;
-switch (day) {
-    case 0:
-        console.log("Sunday");
-        break;
-    case 1:
-        console.log("Monday");
-        break;
-    default:
-        console.log("Other day");
-}
+(123).toString(); // "123"
+(true).toString(); // "true"
 
-// Ternary operator
-let status = age >= 18 ? "adult" : "minor";
+// Converting to Number
+Number("123"); // 123
+Number("123.45"); // 123.45
+Number(""); // 0
+Number("  10  "); // 10
+Number(true); // 1
+Number(false); // 0
+Number(null); // 0
+Number(undefined); // NaN
+Number("hello"); // NaN
 
-// Nullish coalescing (ES2020)
-let username = null;
-let displayName = username ?? "Guest";
+parseInt("123"); // 123
+parseInt("123.45"); // 123
+parseInt("123abc"); // 123
+parseFloat("123.45"); // 123.45
 
-// Optional chaining (ES2020)
-let user = { profile: { name: "Alice" } };
-console.log(user?.profile?.name); // "Alice"
-console.log(user?.settings?.theme); // undefined
+// Unary + operator
++"123"; // 123
++true; // 1
++""; // 0
+
+// Converting to Boolean
+Boolean(1); // true
+Boolean(0); // false
+Boolean("hello"); // true
+Boolean(""); // false
+Boolean({}); // true
+Boolean([]); // true
+Boolean(null); // false
+Boolean(undefined); // false
+
+// Double negation
+!!"hello"; // true
+!!0; // false
 \end{lstlisting}
 
-\subsubsection{Loops}
+\mysubsection{Implicit Type Coercion}
 
-\begin{lstlisting}[style=javascript, caption={\textbf{Loop Structures}}, label=lst:loops]
-// for loop
-for (let i = 0; i < 5; i++) {
-    console.log(i);
-}
+JavaScript automatically converts types when needed:
 
-// while loop
-let count = 0;
-while (count < 5) {
-    console.log(count);
-    count++;
-}
+\begin{lstlisting}[style=javascript, caption={\textbf{Implicit Type Coercion Examples}}, label=lst:implicit-coercion]
+// String coercion
+"5" + 3; // "53" (number to string)
+"Hello " + true; // "Hello true"
+"Value: " + null; // "Value: null"
 
-// do...while loop
-let num = 0;
-do {
-    console.log(num);
-    num++;
-} while (num < 3);
+// Numeric coercion
+"5" - 3; // 2 (string to number)
+"5" * "2"; // 10
+"10" / 2; // 5
+"5" - "2"; // 3
 
-// for...in (objects)
-const obj = { a: 1, b: 2, c: 3 };
-for (let key in obj) {
-    console.log(`${key}: ${obj[key]}`);
-}
+// Boolean coercion in conditions
+if ("hello") { /* truthy */ }
+if (0) { /* falsy */ }
 
-// for...of (iterables)
-const arr = [1, 2, 3];
-for (let value of arr) {
-    console.log(value);
-}
+// Comparison coercion
+"5" == 5; // true (coercion)
+"5" === 5; // false (no coercion)
+null == undefined; // true
+null === undefined; // false
 
-// break and continue
-for (let i = 0; i < 10; i++) {
-    if (i === 5) break;     // Exit loop
-    if (i % 2 === 0) continue; // Skip iteration
-    console.log(i);
-}
+true == 1; // true
+false == 0; // true
+"1" == true; // true
 
-// Array iteration methods
-[1, 2, 3].forEach(n => console.log(n));
-let doubled = [1, 2, 3].map(n => n * 2);
-let evens = [1, 2, 3, 4].filter(n => n % 2 === 0);
-let sum = [1, 2, 3].reduce((acc, n) => acc + n, 0);
+// Special cases
+[] == false; // true
+[] == ![]; // true (confusing!)
+{} + []; // 0 (block vs object)
+[] + {}; // "[object Object]"
 \end{lstlisting}
 
-% Future chapters placeholder
-\chapter{DOM MANIPULATION}
-\textit{This chapter will cover Document Object Model manipulation...}
-
-\chapter{FORMS AND REACT INTRODUCTION}
-\textit{This chapter will cover HTML forms and introduction to React...}
-
-\chapter{REACT STATE AND APIs}
-\textit{This chapter will cover React state management and API integration...}
-
-\chapter{MONGODB AND WEBPACK}
-\textit{This chapter will cover MongoDB NoSQL database and Webpack bundling...}
+% End of enhanced Chapter 1
+% Additional chapters would continue with similar detail...
 
 \end{document}

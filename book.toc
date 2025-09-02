@@ -1,23 +1,25 @@
 \contentsline {chapter}{\numberline {1}BASIC JAVASCRIPT}{1}{}%
 \contentsline {section}{Introduction to JavaScript}{1}{}%
-\contentsline {section}{JavaScript Instructions and Statements}{1}{}%
-\contentsline {section}{Comments in JavaScript}{2}{}%
-\contentsline {section}{Variables in JavaScript}{3}{}%
-\contentsline {subsubsection}{Variable Declaration Keywords}{3}{}%
-\contentsline {subsubsection}{Variable Scope}{4}{}%
-\contentsline {subsubsection}{Hoisting}{5}{}%
-\contentsline {section}{Data Types in JavaScript}{5}{}%
-\contentsline {subsubsection}{Primitive Data Types}{6}{}%
-\contentsline {subsubsection}{Type Conversion and Coercion}{6}{}%
-\contentsline {section}{Arrays in JavaScript}{7}{}%
-\contentsline {subsubsection}{Array Creation and Methods}{7}{}%
-\contentsline {section}{Strings in JavaScript}{8}{}%
-\contentsline {section}{Functions in JavaScript}{9}{}%
-\contentsline {section}{Objects and Methods}{10}{}%
-\contentsline {section}{Decisions and Loops}{11}{}%
-\contentsline {subsubsection}{Conditional Statements}{11}{}%
-\contentsline {subsubsection}{Loops}{12}{}%
-\contentsline {chapter}{\numberline {2}DOM MANIPULATION}{14}{}%
-\contentsline {chapter}{\numberline {3}FORMS AND REACT INTRODUCTION}{15}{}%
-\contentsline {chapter}{\numberline {4}REACT STATE AND APIs}{16}{}%
-\contentsline {chapter}{\numberline {5}MONGODB AND WEBPACK}{17}{}%
+\contentsline {subsection}{What is JavaScript?}{1}{}%
+\contentsline {subsection}{Key Characteristics of JavaScript}{1}{}%
+\contentsline {subsection}{JavaScript Engines}{1}{}%
+\contentsline {subsection}{Client-side vs Server-side JavaScript}{2}{}%
+\contentsline {section}{JavaScript Instructions and Statements}{3}{}%
+\contentsline {subsection}{Understanding Statements}{3}{}%
+\contentsline {subsection}{Types of Statements}{3}{}%
+\contentsline {subsection}{Statement Termination and Semicolons}{5}{}%
+\contentsline {section}{Comments in JavaScript}{6}{}%
+\contentsline {subsection}{Purpose of Comments}{6}{}%
+\contentsline {subsection}{Types of Comments}{6}{}%
+\contentsline {section}{Variables in JavaScript}{9}{}%
+\contentsline {subsection}{Understanding Variables}{9}{}%
+\contentsline {subsection}{Variable Declaration Keywords}{9}{}%
+\contentsline {subsection}{Variable Scope}{12}{}%
+\contentsline {subsection}{Hoisting}{14}{}%
+\contentsline {section}{Data Types in JavaScript}{16}{}%
+\contentsline {subsection}{Type System Overview}{16}{}%
+\contentsline {subsection}{Primitive Data Types}{16}{}%
+\contentsline {subsection}{Non-Primitive Type: Object}{24}{}%
+\contentsline {section}{Type Conversion and Coercion}{27}{}%
+\contentsline {subsection}{Explicit Type Conversion}{27}{}%
+\contentsline {subsection}{Implicit Type Coercion}{28}{}%
